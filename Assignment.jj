@@ -123,8 +123,18 @@ TOKEN : /* Anything not recognised so far */
 
 void Prog() : {}
 {
+    code() <EOF>
+}
+
+void code() : {}
+{
+    (block() [code()])
+}
+
+void block() : {}
+{
     decl_list()
-    | func_list() <EOF>
+    | func_list()
 }
 
 void decl_list() : {}
@@ -140,12 +150,12 @@ void decl() : {}
 
 void var_decl() : {}
 {
-    (<VARIABLE> [<ID> <COLON> <TYPE>])
+    (<VARIABLE> [<ID> <COLON> <TYPE> <SEMIC>])
 }
 
 void const_decl() : {}
 {
-    (<CONSTANT> [<ID> <COLON> <TYPE>])
+    (<CONSTANT> [<ID> <COLON> <TYPE> <SEMIC>])
 }
 
 void func_list() : {}

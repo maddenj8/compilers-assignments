@@ -1,6 +1,7 @@
+variable i:integer;
 integer func_test (x:integer, y:integer) is
-    variable x:int
+    variable x:integer
     begin
-        somethign
+        something
         return
     end

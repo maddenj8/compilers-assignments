@@ -33,6 +33,25 @@ public class SLPParser implements SLPParserConstants {
 ***** SECTION 4 - THE GRAMMAR *****
 ***********************************/
   static final public void Prog() throws ParseException {
+    code();
+    jj_consume_token(0);
+  }
+
+  static final public void code() throws ParseException {
+    block();
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case VARIABLE:
+    case CONSTANT:
+    case TYPE:
+      code();
+      break;
+    default:
+      jj_la1[0] = jj_gen;
+      ;
+    }
+  }
+
+  static final public void block() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case VARIABLE:
     case CONSTANT:
@@ -40,10 +59,9 @@ public class SLPParser implements SLPParserConstants {
       break;
     case TYPE:
       func_list();
-      jj_consume_token(0);
       break;
     default:
-      jj_la1[0] = jj_gen;
+      jj_la1[1] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -57,7 +75,7 @@ public class SLPParser implements SLPParserConstants {
       decl_list();
       break;
     default:
-      jj_la1[1] = jj_gen;
+      jj_la1[2] = jj_gen;
       ;
     }
   }
@@ -71,7 +89,7 @@ public class SLPParser implements SLPParserConstants {
       const_decl();
       break;
     default:
-      jj_la1[2] = jj_gen;
+      jj_la1[3] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -84,9 +102,10 @@ public class SLPParser implements SLPParserConstants {
       jj_consume_token(ID);
       jj_consume_token(COLON);
       jj_consume_token(TYPE);
+      jj_consume_token(SEMIC);
       break;
     default:
-      jj_la1[3] = jj_gen;
+      jj_la1[4] = jj_gen;
       ;
     }
   }
@@ -98,9 +117,10 @@ public class SLPParser implements SLPParserConstants {
       jj_consume_token(ID);
       jj_consume_token(COLON);
       jj_consume_token(TYPE);
+      jj_consume_token(SEMIC);
       break;
     default:
-      jj_la1[4] = jj_gen;
+      jj_la1[5] = jj_gen;
       ;
     }
   }
@@ -112,7 +132,7 @@ public class SLPParser implements SLPParserConstants {
       func_list();
       break;
     default:
-      jj_la1[5] = jj_gen;
+      jj_la1[6] = jj_gen;
       ;
     }
   }
@@ -128,7 +148,7 @@ public class SLPParser implements SLPParserConstants {
         ;
         break;
       default:
-        jj_la1[6] = jj_gen;
+        jj_la1[7] = jj_gen;
         break label_1;
       }
       param_list();
@@ -143,7 +163,7 @@ public class SLPParser implements SLPParserConstants {
         ;
         break;
       default:
-        jj_la1[7] = jj_gen;
+        jj_la1[8] = jj_gen;
         break label_2;
       }
       decl_list();
@@ -161,7 +181,7 @@ public class SLPParser implements SLPParserConstants {
       statement_block();
       break;
     default:
-      jj_la1[8] = jj_gen;
+      jj_la1[9] = jj_gen;
       ;
     }
   }
@@ -182,7 +202,7 @@ public class SLPParser implements SLPParserConstants {
       nemp_param_list();
       break;
     default:
-      jj_la1[9] = jj_gen;
+      jj_la1[10] = jj_gen;
       ;
     }
   }
@@ -203,7 +223,7 @@ public class SLPParser implements SLPParserConstants {
   static public Token jj_nt;
   static private int jj_ntk;
   static private int jj_gen;
-  static final private int[] jj_la1 = new int[10];
+  static final private int[] jj_la1 = new int[11];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static {
@@ -211,10 +231,10 @@ public class SLPParser implements SLPParserConstants {
       jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x1c000000,0x800,0xc000000,0x0,0x0,0x10000000,0x0,0xc000000,0x0,0x20000,};
+      jj_la1_0 = new int[] {0x1c000000,0x1c000000,0x800,0xc000000,0x0,0x0,0x10000000,0x0,0xc000000,0x0,0x20000,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x0,0x0,0x0,0x200,0x200,0x0,0x200,0x0,0x200,0x0,};
+      jj_la1_1 = new int[] {0x0,0x0,0x0,0x0,0x200,0x200,0x0,0x200,0x0,0x200,0x0,};
    }
 
   /** Constructor with InputStream. */
@@ -235,7 +255,7 @@ public class SLPParser implements SLPParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 10; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 11; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -249,7 +269,7 @@ public class SLPParser implements SLPParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 10; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 11; i++) jj_la1[i] = -1;
   }
 
   /** Constructor. */
@@ -266,7 +286,7 @@ public class SLPParser implements SLPParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 10; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 11; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -276,7 +296,7 @@ public class SLPParser implements SLPParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 10; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 11; i++) jj_la1[i] = -1;
   }
 
   /** Constructor with generated Token Manager. */
@@ -292,7 +312,7 @@ public class SLPParser implements SLPParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 10; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 11; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -301,7 +321,7 @@ public class SLPParser implements SLPParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 10; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 11; i++) jj_la1[i] = -1;
   }
 
   static private Token jj_consume_token(int kind) throws ParseException {
@@ -357,7 +377,7 @@ public class SLPParser implements SLPParserConstants {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 11; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {

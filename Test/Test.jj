@@ -94,7 +94,7 @@ void Prog() : {}
 }
 void Stm() : {}
 {
-    (SimpleStm() [<SEMIC> Stm()] )
+    (SimpleStm() [<SEMIC> Stm()])
 }
 
 void SimpleStm() : {}
