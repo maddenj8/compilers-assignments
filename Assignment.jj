@@ -86,6 +86,7 @@ TOKEN [IGNORE_CASE]: /* Keywords */
     | < CONSTANT : "constant" >
     | < TYPE : ("integer" | "boolean") >
     | < IS : "is" >
+    | < BOOL : "true" | "false" >
 }
 
 TOKEN: /* Logical Operators */
@@ -165,7 +166,7 @@ void func_list() : {}
 
 void func() : {}
 {
-    (<TYPE> <ID> <LBR>) (param_list())* (<RBR> <IS>) (decl_list())* (<BEGIN> statement_block() <RETURN> <END>)
+    (<TYPE> <ID> <LBR>) (param_list())* (<RBR> <IS>) (decl_list())* (<BEGIN> statement_block() return_statement() <END>)
 }
 
 void statement_block() : {}
@@ -175,9 +176,40 @@ void statement_block() : {}
 
 void statement() : {}
 {
-    <ID> // TODO: replace this with the actual statement 
-    // this includes implementing the fragment, expression and the rest of the 
-    // stuff that is involved with statement
+    (<ID> <ASSIGN> expr() <SEMIC>)
+    | <BEGIN> statement_block() return_statement() <END>
+}
+
+void expr() : {}
+{
+    <LBR> expr() <RBR>
+    | <ID> <LBR> arg_list() <RBR>
+    | fragment()
+}
+
+void arg_list() : {}
+{
+    (nemp_arg_list())*
+}
+
+void nemp_arg_list() : {}
+{
+    (<ID> [<COMMA> nemp_arg_list()])
+}
+
+void fragment() : {}
+{
+    <ID>
+    | <MINUS_SIGN> <ID>
+    | <NUM>
+    | <BOOL>
+    //| expr()
+}
+
+void bin_op() : {}
+{
+    <PLUS_SIGN> 
+    | <MINUS_SIGN>
 }
 
 void param_list() : {}
@@ -193,4 +225,9 @@ void nemp_param_list() : {}
 void param() : {} 
 {
     <ID> <COLON> <TYPE>
+}
+
+void return_statement() : {} 
+{ 
+    <RETURN> [<LBR> expr() <RBR>] <SEMIC>
 }

@@ -1,7 +1,12 @@
 variable i:integer;
 integer func_test (x:integer, y:integer) is
-    variable x:integer
+    variable x:integer;
     begin
-        something
-        return
+        i := 2;
+        return;
     end
+
+main
+begin
+    return();
+end

@@ -47,33 +47,35 @@ public interface SLPParserConstants {
   /** RegularExpression Id. */
   int IS = 29;
   /** RegularExpression Id. */
-  int LOG_NEG = 30;
+  int BOOL = 30;
   /** RegularExpression Id. */
-  int LOG_DIS = 31;
+  int LOG_NEG = 31;
   /** RegularExpression Id. */
-  int LOG_AND = 32;
+  int LOG_DIS = 32;
   /** RegularExpression Id. */
-  int EQUALS = 33;
+  int LOG_AND = 33;
   /** RegularExpression Id. */
-  int NOT_EQUALS = 34;
+  int EQUALS = 34;
   /** RegularExpression Id. */
-  int LESS_THAN = 35;
+  int NOT_EQUALS = 35;
   /** RegularExpression Id. */
-  int LESS_EQUALS = 36;
+  int LESS_THAN = 36;
   /** RegularExpression Id. */
-  int GREATER_THAN = 37;
+  int LESS_EQUALS = 37;
   /** RegularExpression Id. */
-  int GREATER_EQUALS = 38;
+  int GREATER_THAN = 38;
   /** RegularExpression Id. */
-  int NUM = 39;
+  int GREATER_EQUALS = 39;
   /** RegularExpression Id. */
-  int DIGIT = 40;
+  int NUM = 40;
   /** RegularExpression Id. */
-  int ID = 41;
+  int DIGIT = 41;
   /** RegularExpression Id. */
-  int LETTER = 42;
+  int ID = 42;
   /** RegularExpression Id. */
-  int OTHER = 43;
+  int LETTER = 43;
+  /** RegularExpression Id. */
+  int OTHER = 44;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -112,6 +114,7 @@ public interface SLPParserConstants {
     "\"constant\"",
     "<TYPE>",
     "\"is\"",
+    "<BOOL>",
     "\"~\"",
     "\"|\"",
     "\"&\"",
