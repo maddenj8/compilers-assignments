@@ -6,7 +6,7 @@ integer func_test (x:integer, y:integer) is
         return;
     end
 
-main
+main 
 begin
-    return();
+    // this is a comment
 end

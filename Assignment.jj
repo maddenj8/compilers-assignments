@@ -136,6 +136,7 @@ void block() : {}
 {
     decl_list()
     | func_list()
+    | main_statement()
 }
 
 void decl_list() : {}
@@ -230,4 +231,9 @@ void param() : {}
 void return_statement() : {} 
 { 
     <RETURN> [<LBR> expr() <RBR>] <SEMIC>
+}
+
+void main_statement() : {} 
+{
+    <MAIN> <BEGIN> (decl_list())* (statement_block())* <END>
 }
