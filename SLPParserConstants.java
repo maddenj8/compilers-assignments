@@ -49,33 +49,41 @@ public interface SLPParserConstants {
   /** RegularExpression Id. */
   int BOOL = 30;
   /** RegularExpression Id. */
-  int LOG_NEG = 31;
+  int IF = 31;
   /** RegularExpression Id. */
-  int LOG_DIS = 32;
+  int ELSE = 32;
   /** RegularExpression Id. */
-  int LOG_AND = 33;
+  int WHILE = 33;
   /** RegularExpression Id. */
-  int EQUALS = 34;
+  int SKIP_WORD = 34;
   /** RegularExpression Id. */
-  int NOT_EQUALS = 35;
+  int LOG_NEG = 35;
   /** RegularExpression Id. */
-  int LESS_THAN = 36;
+  int LOG_DIS = 36;
   /** RegularExpression Id. */
-  int LESS_EQUALS = 37;
+  int LOG_AND = 37;
   /** RegularExpression Id. */
-  int GREATER_THAN = 38;
+  int EQUALS = 38;
   /** RegularExpression Id. */
-  int GREATER_EQUALS = 39;
+  int NOT_EQUALS = 39;
   /** RegularExpression Id. */
-  int NUM = 40;
+  int LESS_THAN = 40;
   /** RegularExpression Id. */
-  int DIGIT = 41;
+  int LESS_EQUALS = 41;
   /** RegularExpression Id. */
-  int ID = 42;
+  int GREATER_THAN = 42;
   /** RegularExpression Id. */
-  int LETTER = 43;
+  int GREATER_EQUALS = 43;
   /** RegularExpression Id. */
-  int OTHER = 44;
+  int NUM = 44;
+  /** RegularExpression Id. */
+  int DIGIT = 45;
+  /** RegularExpression Id. */
+  int ID = 46;
+  /** RegularExpression Id. */
+  int LETTER = 47;
+  /** RegularExpression Id. */
+  int OTHER = 48;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -115,6 +123,10 @@ public interface SLPParserConstants {
     "<TYPE>",
     "\"is\"",
     "<BOOL>",
+    "\"if\"",
+    "\"else\"",
+    "\"while\"",
+    "\"skip\"",
     "\"~\"",
     "\"|\"",
     "\"&\"",

@@ -1,0 +1,19 @@
+integer multiply (x:integer, y:integer) is
+    variable result:integer;
+    variable minus_sign: boolean;
+
+    begin
+        if(x < 0)
+        begin
+            minus_sign := true;
+            x := -x;
+        end
+        else
+        begin
+            if (x > 0) 
+            begin
+                skip;
+            end
+        end
+    return(minus_sign);
+end

@@ -1,12 +1,16 @@
 variable i:integer;
-integer func_test (x:integer, y:integer) is
-    variable x:integer;
-    begin
-        i := 2;
-        return;
-    end
-
-main 
+integer test_fn (x:integer) is
+    variable i:integer;
 begin
-    // this is a comment
+    i := 8;
+    return(x(t));
+end
+
+main
+begin  
+    variable i:integer;
+
+    i:=1;
+    i:=test_fn(i);
+    /* i:=test_fn(i, j); */
 end

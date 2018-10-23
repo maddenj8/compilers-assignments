@@ -50,7 +50,7 @@ SKIP : /*** Ignoring spaces/tabs/newlines ***/
 SKIP : /* COMMENTS */
 {
     "/*" { commentNesting++; } : IN_COMMENT
-    | "//" : IN_COMMENT
+    | "//" : IN_COMMENT  /************* THIS TYPE OF COMMENT DOES NOT WORK *********/
 }
 <IN_COMMENT> SKIP :
 {
@@ -87,6 +87,10 @@ TOKEN [IGNORE_CASE]: /* Keywords */
     | < TYPE : ("integer" | "boolean") >
     | < IS : "is" >
     | < BOOL : "true" | "false" >
+    | < IF : "if" >
+    | < ELSE : "else" >
+    | < WHILE : "while" > 
+    | < SKIP_WORD : "skip" > 
 }
 
 TOKEN: /* Logical Operators */
@@ -167,7 +171,7 @@ void func_list() : {}
 
 void func() : {}
 {
-    (<TYPE> <ID> <LBR>) (param_list())* (<RBR> <IS>) (decl_list())* (<BEGIN> statement_block() return_statement() <END>)
+    (<TYPE> <ID> <LBR>) (param_list())* (<RBR> <IS>) (decl_list())* (statement_block())
 }
 
 void statement_block() : {}
@@ -179,6 +183,34 @@ void statement() : {}
 {
     (<ID> <ASSIGN> expr() <SEMIC>)
     | <BEGIN> statement_block() return_statement() <END>
+    | <IF> condition() <BEGIN> (statement_block())* <END>
+    | <ELSE> <BEGIN> (statement_block()) * <END>
+    | <WHILE> condition() <BEGIN> (statement_block())* <END>
+    | <SKIP_WORD> <SEMIC>
+}
+
+void condition() : {} 
+{
+    <LOG_NEG> condition()
+    | <LBR> condition() <RBR>
+    | expr() comp_ops() expr()
+    //| condition() log_ops() condition()
+}
+
+void comp_ops() : {} 
+{
+    <EQUALS>
+    | <NOT_EQUALS>
+    | <LESS_THAN>
+    | <LESS_EQUALS>
+    | <GREATER_THAN>
+    | <GREATER_EQUALS>
+}
+
+void log_ops() : {}
+{
+    <LOG_DIS>
+    | <LOG_AND>
 }
 
 void expr() : {}
@@ -190,7 +222,7 @@ void expr() : {}
 
 void arg_list() : {}
 {
-    (nemp_arg_list())*
+    nemp_arg_list()
 }
 
 void nemp_arg_list() : {}
@@ -230,7 +262,7 @@ void param() : {}
 
 void return_statement() : {} 
 { 
-    <RETURN> [<LBR> expr() <RBR>] <SEMIC>
+    <RETURN> (expr())* <SEMIC>
 }
 
 void main_statement() : {} 
