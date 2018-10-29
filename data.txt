@@ -3,7 +3,8 @@ integer test_fn (x:integer) is
     variable i:integer;
 begin
     i := 8;
-    return(x(t));
+    return(x, y, x);
+    /*return;*/
 end
 
 main
@@ -11,6 +12,6 @@ begin
     variable i:integer;
 
     i:=1;
-    i:=test_fn(i);
+    /* i:=test_fn(i); */ 
     /* i:=test_fn(i, j); */
 end

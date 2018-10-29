@@ -216,7 +216,7 @@ void log_ops() : {}
 void expr() : {}
 {
     <LBR> expr() <RBR>
-    | <ID> <LBR> arg_list() <RBR>
+    /* | <ID> <LBR> arg_list() <RBR> */
     | fragment()
 }
 

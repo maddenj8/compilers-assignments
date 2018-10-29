@@ -360,15 +360,10 @@ public class SLPParser implements SLPParserConstants {
       expr();
       jj_consume_token(RBR);
       break;
-    case ID:
-      jj_consume_token(ID);
-      jj_consume_token(LBR);
-      arg_list();
-      jj_consume_token(RBR);
-      break;
     case MINUS_SIGN:
     case BOOL:
     case NUM:
+    case ID:
       fragment();
       break;
     default:
