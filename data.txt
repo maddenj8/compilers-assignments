@@ -12,6 +12,6 @@ begin
     variable i:integer;
 
     i:=1;
-    /* i:=test_fn(i); */ 
+    i:=test_fn(x);
     /* i:=test_fn(i, j); */
 end

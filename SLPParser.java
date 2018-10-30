@@ -354,22 +354,37 @@ public class SLPParser implements SLPParserConstants {
   }
 
   static final public void expr() throws ParseException {
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case LBR:
+    if (jj_2_1(2)) {
+      label_6:
+      while (true) {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case ID:
+          ;
+          break;
+        default:
+          jj_la1[17] = jj_gen;
+          break label_6;
+        }
+        jj_consume_token(ID);
+      }
       jj_consume_token(LBR);
       expr();
       jj_consume_token(RBR);
-      break;
-    case MINUS_SIGN:
-    case BOOL:
-    case NUM:
-    case ID:
-      fragment();
-      break;
-    default:
-      jj_la1[17] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
+    } else {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case ID:
+        arg_list();
+        break;
+      case MINUS_SIGN:
+      case BOOL:
+      case NUM:
+        fragment();
+        break;
+      default:
+        jj_la1[18] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
     }
   }
 
@@ -379,14 +394,18 @@ public class SLPParser implements SLPParserConstants {
 
   static final public void nemp_arg_list() throws ParseException {
     jj_consume_token(ID);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case COMMA:
+    label_7:
+    while (true) {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case COMMA:
+        ;
+        break;
+      default:
+        jj_la1[19] = jj_gen;
+        break label_7;
+      }
       jj_consume_token(COMMA);
       nemp_arg_list();
-      break;
-    default:
-      jj_la1[18] = jj_gen;
-      ;
     }
   }
 
@@ -406,7 +425,7 @@ public class SLPParser implements SLPParserConstants {
       jj_consume_token(BOOL);
       break;
     default:
-      jj_la1[19] = jj_gen;
+      jj_la1[20] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -421,7 +440,7 @@ public class SLPParser implements SLPParserConstants {
       jj_consume_token(MINUS_SIGN);
       break;
     default:
-      jj_la1[20] = jj_gen;
+      jj_la1[21] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -439,7 +458,7 @@ public class SLPParser implements SLPParserConstants {
       nemp_param_list();
       break;
     default:
-      jj_la1[21] = jj_gen;
+      jj_la1[22] = jj_gen;
       ;
     }
   }
@@ -452,7 +471,7 @@ public class SLPParser implements SLPParserConstants {
 
   static final public void return_statement() throws ParseException {
     jj_consume_token(RETURN);
-    label_6:
+    label_8:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case LBR:
@@ -463,8 +482,8 @@ public class SLPParser implements SLPParserConstants {
         ;
         break;
       default:
-        jj_la1[22] = jj_gen;
-        break label_6;
+        jj_la1[23] = jj_gen;
+        break label_8;
       }
       expr();
     }
@@ -474,7 +493,7 @@ public class SLPParser implements SLPParserConstants {
   static final public void main_statement() throws ParseException {
     jj_consume_token(MAIN);
     jj_consume_token(BEGIN);
-    label_7:
+    label_9:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case VARIABLE:
@@ -482,12 +501,12 @@ public class SLPParser implements SLPParserConstants {
         ;
         break;
       default:
-        jj_la1[23] = jj_gen;
-        break label_7;
+        jj_la1[24] = jj_gen;
+        break label_9;
       }
       decl_list();
     }
-    label_8:
+    label_10:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case BEGIN:
@@ -499,12 +518,84 @@ public class SLPParser implements SLPParserConstants {
         ;
         break;
       default:
-        jj_la1[24] = jj_gen;
-        break label_8;
+        jj_la1[25] = jj_gen;
+        break label_10;
       }
       statement_block();
     }
     jj_consume_token(END);
+  }
+
+  static private boolean jj_2_1(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_1(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(0, xla); }
+  }
+
+  static private boolean jj_3R_14() {
+    if (jj_3R_16()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_15() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(46)) {
+    jj_scanpos = xsp;
+    if (jj_3R_17()) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(44)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(30)) return true;
+    }
+    }
+    }
+    return false;
+  }
+
+  static private boolean jj_3R_13() {
+    if (jj_3R_15()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_12() {
+    if (jj_3R_14()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_16() {
+    if (jj_scan_token(ID)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_11() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_1()) {
+    jj_scanpos = xsp;
+    if (jj_3R_12()) {
+    jj_scanpos = xsp;
+    if (jj_3R_13()) return true;
+    }
+    }
+    return false;
+  }
+
+  static private boolean jj_3_1() {
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_scan_token(46)) { jj_scanpos = xsp; break; }
+    }
+    if (jj_scan_token(LBR)) return true;
+    if (jj_3R_11()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_17() {
+    if (jj_scan_token(MINUS_SIGN)) return true;
+    return false;
   }
 
   static private boolean jj_initialized_once = false;
@@ -516,8 +607,10 @@ public class SLPParser implements SLPParserConstants {
   /** Next token. */
   static public Token jj_nt;
   static private int jj_ntk;
+  static private Token jj_scanpos, jj_lastpos;
+  static private int jj_la;
   static private int jj_gen;
-  static final private int[] jj_la1 = new int[25];
+  static final private int[] jj_la1 = new int[26];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static {
@@ -525,11 +618,14 @@ public class SLPParser implements SLPParserConstants {
       jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x1c800000,0x1c800000,0x800,0xc000000,0x0,0x0,0x10000000,0x0,0xc000000,0x81000000,0x81000000,0x81000000,0x81000000,0x81000000,0x40088000,0x0,0x0,0x40088000,0x20000,0x40080000,0xc0000,0x20000,0x40088000,0xc000000,0x81000000,};
+      jj_la1_0 = new int[] {0x1c800000,0x1c800000,0x800,0xc000000,0x0,0x0,0x10000000,0x0,0xc000000,0x81000000,0x81000000,0x81000000,0x81000000,0x81000000,0x40088000,0x0,0x0,0x0,0x40080000,0x20000,0x40080000,0xc0000,0x20000,0x40088000,0xc000000,0x81000000,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x0,0x0,0x0,0x0,0x4000,0x4000,0x0,0x4000,0x0,0x4007,0x4007,0x4007,0x4007,0x4007,0x5008,0xfc0,0x30,0x5000,0x0,0x5000,0x0,0x0,0x5000,0x0,0x4007,};
+      jj_la1_1 = new int[] {0x0,0x0,0x0,0x0,0x4000,0x4000,0x0,0x4000,0x0,0x4007,0x4007,0x4007,0x4007,0x4007,0x5008,0xfc0,0x30,0x4000,0x5000,0x0,0x5000,0x0,0x0,0x5000,0x0,0x4007,};
    }
+  static final private JJCalls[] jj_2_rtns = new JJCalls[1];
+  static private boolean jj_rescan = false;
+  static private int jj_gc = 0;
 
   /** Constructor with InputStream. */
   public SLPParser(java.io.InputStream stream) {
@@ -549,7 +645,8 @@ public class SLPParser implements SLPParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 25; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 26; i++) jj_la1[i] = -1;
+    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
   /** Reinitialise. */
@@ -563,7 +660,8 @@ public class SLPParser implements SLPParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 25; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 26; i++) jj_la1[i] = -1;
+    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
   /** Constructor. */
@@ -580,7 +678,8 @@ public class SLPParser implements SLPParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 25; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 26; i++) jj_la1[i] = -1;
+    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
   /** Reinitialise. */
@@ -590,7 +689,8 @@ public class SLPParser implements SLPParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 25; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 26; i++) jj_la1[i] = -1;
+    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
   /** Constructor with generated Token Manager. */
@@ -606,7 +706,8 @@ public class SLPParser implements SLPParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 25; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 26; i++) jj_la1[i] = -1;
+    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
   /** Reinitialise. */
@@ -615,7 +716,8 @@ public class SLPParser implements SLPParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 25; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 26; i++) jj_la1[i] = -1;
+    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
   static private Token jj_consume_token(int kind) throws ParseException {
@@ -625,11 +727,44 @@ public class SLPParser implements SLPParserConstants {
     jj_ntk = -1;
     if (token.kind == kind) {
       jj_gen++;
+      if (++jj_gc > 100) {
+        jj_gc = 0;
+        for (int i = 0; i < jj_2_rtns.length; i++) {
+          JJCalls c = jj_2_rtns[i];
+          while (c != null) {
+            if (c.gen < jj_gen) c.first = null;
+            c = c.next;
+          }
+        }
+      }
       return token;
     }
     token = oldToken;
     jj_kind = kind;
     throw generateParseException();
+  }
+
+  static private final class LookaheadSuccess extends java.lang.Error { }
+  static final private LookaheadSuccess jj_ls = new LookaheadSuccess();
+  static private boolean jj_scan_token(int kind) {
+    if (jj_scanpos == jj_lastpos) {
+      jj_la--;
+      if (jj_scanpos.next == null) {
+        jj_lastpos = jj_scanpos = jj_scanpos.next = token_source.getNextToken();
+      } else {
+        jj_lastpos = jj_scanpos = jj_scanpos.next;
+      }
+    } else {
+      jj_scanpos = jj_scanpos.next;
+    }
+    if (jj_rescan) {
+      int i = 0; Token tok = token;
+      while (tok != null && tok != jj_scanpos) { i++; tok = tok.next; }
+      if (tok != null) jj_add_error_token(kind, i);
+    }
+    if (jj_scanpos.kind != kind) return true;
+    if (jj_la == 0 && jj_scanpos == jj_lastpos) throw jj_ls;
+    return false;
   }
 
 
@@ -662,6 +797,36 @@ public class SLPParser implements SLPParserConstants {
   static private java.util.List<int[]> jj_expentries = new java.util.ArrayList<int[]>();
   static private int[] jj_expentry;
   static private int jj_kind = -1;
+  static private int[] jj_lasttokens = new int[100];
+  static private int jj_endpos;
+
+  static private void jj_add_error_token(int kind, int pos) {
+    if (pos >= 100) return;
+    if (pos == jj_endpos + 1) {
+      jj_lasttokens[jj_endpos++] = kind;
+    } else if (jj_endpos != 0) {
+      jj_expentry = new int[jj_endpos];
+      for (int i = 0; i < jj_endpos; i++) {
+        jj_expentry[i] = jj_lasttokens[i];
+      }
+      boolean exists = false;
+      for (java.util.Iterator<?> it = jj_expentries.iterator(); it.hasNext();) {
+        exists = true;
+        int[] oldentry = (int[])(it.next());
+        if (oldentry.length == jj_expentry.length) {
+          for (int i = 0; i < jj_expentry.length; i++) {
+            if (oldentry[i] != jj_expentry[i]) {
+              exists = false;
+              break;
+            }
+          }
+          if (exists) break;
+        }
+      }
+      if (!exists) jj_expentries.add(jj_expentry);
+      if (pos != 0) jj_lasttokens[(jj_endpos = pos) - 1] = kind;
+    }
+  }
 
   /** Generate ParseException. */
   static public ParseException generateParseException() {
@@ -671,7 +836,7 @@ public class SLPParser implements SLPParserConstants {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 25; i++) {
+    for (int i = 0; i < 26; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -690,6 +855,9 @@ public class SLPParser implements SLPParserConstants {
         jj_expentries.add(jj_expentry);
       }
     }
+    jj_endpos = 0;
+    jj_rescan_token();
+    jj_add_error_token(0, 0);
     int[][] exptokseq = new int[jj_expentries.size()][];
     for (int i = 0; i < jj_expentries.size(); i++) {
       exptokseq[i] = jj_expentries.get(i);
@@ -703,6 +871,41 @@ public class SLPParser implements SLPParserConstants {
 
   /** Disable tracing. */
   static final public void disable_tracing() {
+  }
+
+  static private void jj_rescan_token() {
+    jj_rescan = true;
+    for (int i = 0; i < 1; i++) {
+    try {
+      JJCalls p = jj_2_rtns[i];
+      do {
+        if (p.gen > jj_gen) {
+          jj_la = p.arg; jj_lastpos = jj_scanpos = p.first;
+          switch (i) {
+            case 0: jj_3_1(); break;
+          }
+        }
+        p = p.next;
+      } while (p != null);
+      } catch(LookaheadSuccess ls) { }
+    }
+    jj_rescan = false;
+  }
+
+  static private void jj_save(int index, int xla) {
+    JJCalls p = jj_2_rtns[index];
+    while (p.gen > jj_gen) {
+      if (p.next == null) { p = p.next = new JJCalls(); break; }
+      p = p.next;
+    }
+    p.gen = jj_gen + xla - jj_la; p.first = token; p.arg = xla;
+  }
+
+  static final class JJCalls {
+    int gen;
+    Token first;
+    int arg;
+    JJCalls next;
   }
 
 }

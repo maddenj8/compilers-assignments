@@ -215,8 +215,8 @@ void log_ops() : {}
 
 void expr() : {}
 {
-    <LBR> expr() <RBR>
-    /* | <ID> <LBR> arg_list() <RBR> */
+    LOOKAHEAD(2) (<ID>)* <LBR> expr() <RBR>
+    | arg_list()
     | fragment()
 }
 
@@ -227,7 +227,7 @@ void arg_list() : {}
 
 void nemp_arg_list() : {}
 {
-    (<ID> [<COMMA> nemp_arg_list()])
+    (<ID> (<COMMA> nemp_arg_list())*)
 }
 
 void fragment() : {}
@@ -236,7 +236,7 @@ void fragment() : {}
     | <MINUS_SIGN> <ID>
     | <NUM>
     | <BOOL>
-    //| expr()
+    //| LOOKAHEAD(2) expr()
 }
 
 void bin_op() : {}
