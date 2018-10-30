@@ -191,10 +191,14 @@ void statement() : {}
 
 void condition() : {} 
 {
+    simple_condition() (log_ops() simple_condition())*
+}
+
+void simple_condition() : {}
+{
     <LOG_NEG> condition()
     | <LBR> condition() <RBR>
     | expr() comp_ops() expr()
-    //| condition() log_ops() condition()
 }
 
 void comp_ops() : {} 
@@ -215,7 +219,8 @@ void log_ops() : {}
 
 void expr() : {}
 {
-    LOOKAHEAD(2) (<ID>)* <LBR> expr() <RBR>
+    LOOKAHEAD(3) fragment() bin_op() fragment()
+    | LOOKAHEAD(2) (<ID>)* <LBR> expr() <RBR>
     | arg_list()
     | fragment()
 }

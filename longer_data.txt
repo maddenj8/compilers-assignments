@@ -1,12 +1,15 @@
-integer multiply (x:integer, y:integer) is
+integer some_func (x:integer, y:integer) is
     variable result:integer;
     variable minus_sign: boolean;
 
     begin
-        if(x < 0)
+        if true < false
         begin
             minus_sign := true;
-            x := -x;
+            x := x + 3;
+            b := true;
+            /* x := -x - 3; */
+            /* x := x + 3; */
         end
         else
         begin
