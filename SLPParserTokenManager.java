@@ -529,7 +529,7 @@ static private int jjMoveNfa_0(int startState, int curPos)
    catch(java.io.IOException e) { throw new Error("Internal Error"); }
    curPos = 0;
    int startsAt = 0;
-   jjnewStateCnt = 25;
+   jjnewStateCnt = 26;
    int i = 1;
    jjstateSet[0] = startState;
    int kind = 0x7fffffff;
@@ -561,8 +561,16 @@ static private int jjMoveNfa_0(int startState, int curPos)
                case 23:
                   if ((0x3ff000000000000L & l) == 0L)
                      break;
-                  kind = 44;
+                  if (kind > 44)
+                     kind = 44;
                   jjCheckNAdd(23);
+                  break;
+               case 25:
+                  if ((0x3ff000000000000L & l) == 0L)
+                     break;
+                  if (kind > 46)
+                     kind = 46;
+                  jjstateSet[jjnewStateCnt++] = 25;
                   break;
                default : break;
             }
@@ -580,7 +588,7 @@ static private int jjMoveNfa_0(int startState, int curPos)
                   {
                      if (kind > 46)
                         kind = 46;
-                     jjCheckNAdd(24);
+                     jjCheckNAdd(25);
                   }
                   if ((0x4000000040L & l) != 0L)
                      jjstateSet[jjnewStateCnt++] = 20;
@@ -676,11 +684,12 @@ static private int jjMoveNfa_0(int startState, int curPos)
                      jjstateSet[jjnewStateCnt++] = 20;
                   break;
                case 24:
+               case 25:
                   if ((0x7fffffe87fffffeL & l) == 0L)
                      break;
                   if (kind > 46)
                      kind = 46;
-                  jjCheckNAdd(24);
+                  jjCheckNAdd(25);
                   break;
                default : break;
             }
@@ -708,7 +717,7 @@ static private int jjMoveNfa_0(int startState, int curPos)
          kind = 0x7fffffff;
       }
       ++curPos;
-      if ((i = jjnewStateCnt) == (startsAt = 25 - (jjnewStateCnt = startsAt)))
+      if ((i = jjnewStateCnt) == (startsAt = 26 - (jjnewStateCnt = startsAt)))
          break;
       try { curChar = input_stream.readChar(); }
       catch(java.io.IOException e) { break; }
@@ -795,8 +804,8 @@ static final long[] jjtoSkip = {
    0x7feL, 
 };
 static protected JavaCharStream input_stream;
-static private final int[] jjrounds = new int[25];
-static private final int[] jjstateSet = new int[50];
+static private final int[] jjrounds = new int[26];
+static private final int[] jjstateSet = new int[52];
 private static final StringBuilder jjimage = new StringBuilder();
 private static StringBuilder image = jjimage;
 private static int jjimageLen;
@@ -827,7 +836,7 @@ static private void ReInitRounds()
 {
    int i;
    jjround = 0x80000001;
-   for (i = 25; i-- > 0;)
+   for (i = 26; i-- > 0;)
       jjrounds[i] = 0x80000000;
 }
 

@@ -1,0 +1,9 @@
+integer func() is 
+begin
+    return();
+end
+
+main
+begin
+    func();
+end

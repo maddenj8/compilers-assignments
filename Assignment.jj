@@ -114,7 +114,7 @@ TOKEN : /* Numbers and identifiers */
 {
     < NUM : ("-")*(<DIGIT>)+ > // num can start with a minus
     | < #DIGIT : ["0" - "9"] >
-    | < ID : (<LETTER>)+ >
+    | < ID : <LETTER> (<LETTER> | <DIGIT>)* >
     | < #LETTER : ["a" - "z", "A" - "Z", "_"] >
 }
 
@@ -161,7 +161,7 @@ void var_decl() : {}
 
 void const_decl() : {}
 {
-    (<CONSTANT> [<ID> <COLON> <TYPE> <SEMIC>])
+    (<CONSTANT> [<ID> <COLON> <TYPE> <ASSIGN> expr() <SEMIC>])
 }
 
 void func_list() : {}
@@ -181,8 +181,9 @@ void statement_block() : {}
 
 void statement() : {}
 {
-    (<ID> <ASSIGN> expr() <SEMIC>)
-    | <BEGIN> statement_block() return_statement() <END>
+    LOOKAHEAD(2) (<ID> <ASSIGN> expr() <SEMIC>)
+    | LOOKAHEAD(2) <ID> <LBR> (expr())* <RBR> <SEMIC>
+    | <BEGIN> (statement_block())* return_statement() <END>
     | <IF> condition() <BEGIN> (statement_block())* <END>
     | <ELSE> <BEGIN> (statement_block()) * <END>
     | <WHILE> condition() <BEGIN> (statement_block())* <END>
@@ -267,7 +268,7 @@ void param() : {}
 
 void return_statement() : {} 
 { 
-    <RETURN> (expr())* <SEMIC>
+    <RETURN> <LBR> (expr())* <RBR> <SEMIC>
 }
 
 void main_statement() : {} 

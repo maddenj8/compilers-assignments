@@ -3,7 +3,7 @@ integer some_func (x:integer, y:integer) is
     variable minus_sign: boolean;
 
     begin
-        if true < false
+        if true < false & x < 4
         begin
             minus_sign := true;
             x := x + 3;

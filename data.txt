@@ -3,8 +3,7 @@ integer test_fn (x:integer) is
     variable i:integer;
 begin
     i := 8;
-    return(x, y, x);
-    /*return;*/
+    return(x, y, m);
 end
 
 main
