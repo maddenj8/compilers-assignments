@@ -45,12 +45,12 @@ SKIP : /*** Ignoring spaces/tabs/newlines ***/
     | "\n"
     | "\r"
     | "\f"
+    | < "//" (~["\n","\r"])* ("\n" | "\r" | "\r\n") >
 }
 
 SKIP : /* COMMENTS */
 {
     "/*" { commentNesting++; } : IN_COMMENT
-    | "//" : IN_COMMENT  /************* THIS TYPE OF COMMENT DOES NOT WORK *********/
 }
 <IN_COMMENT> SKIP :
 {
@@ -171,7 +171,7 @@ void func_list() : {}
 
 void func() : {}
 {
-    (<TYPE> <ID> <LBR>) (param_list())* (<RBR> <IS>) (decl_list())* (statement_block())
+    <TYPE> <ID> <LBR> (param_list())* <RBR> <IS> (decl_list())* (statement_block())
 }
 
 void statement_block() : {}
@@ -258,7 +258,7 @@ void param_list() : {}
 
 void nemp_param_list() : {}
 {
-    (param() [<COMMA> nemp_param_list()])
+    param() [<COMMA> nemp_param_list()]
 }
 
 void param() : {} 

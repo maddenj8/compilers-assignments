@@ -1,5 +1,7 @@
+// this is the one
 main
 begin
     //this is a 
-    /* simple empty /* example */ with comments */
+    //blah blah yea yeah
+    /* simple empty /* example */ with // somethign comments */
 end
