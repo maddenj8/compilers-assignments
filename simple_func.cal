@@ -1,9 +1,0 @@
-integer func() is 
-begin
-    return();
-end
-
-main
-begin
-    // something
-end
