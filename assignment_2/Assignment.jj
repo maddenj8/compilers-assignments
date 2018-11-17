@@ -1,0 +1,275 @@
+options { JAVA_UNICODE_ESCAPE = true; }
+PARSER_BEGIN(SLPParser)
+public class SLPParser {
+    public static void main(String args[]) {
+        SLPParser parser;
+        if (args.length == 0) {
+            System.out.println("SLP Parser: Reading from standard input . . .");
+            parser = new SLPParser(System.in);
+        } else if (args.length == 1) {
+            System.out.println("SLP Parser: Reading from file " + args[0] + " . . .");
+            try {
+                parser = new SLPParser(new java.io.FileInputStream(args[0]));
+            } catch (java.io.FileNotFoundException e) {
+                System.out.println("SLP Parser: File " + args[0] + " not found.");
+                return;
+            }
+        } else {
+            System.out.println("SLP Parser: Usage is one of:");
+            System.out.println(" java SLPParser < inputfile");
+            System.out.println("OR");
+            System.out.println(" java SLPParser inputfile");
+            return;
+        }
+        try {
+            parser.Prog(); // start point of the program
+            System.out.println("SLP Parser: SLP program parsed successfully.");
+        } catch (ParseException e) {
+            System.out.println(e.getMessage());
+            System.out.println("SLP Parser: Encountered errors during parse.");
+        }
+    }
+}
+PARSER_END(SLPParser)
+/*****************************************
+***** SECTION 3 - TOKEN DEFINITIONS *****
+*****************************************/
+TOKEN_MGR_DECLS :
+{
+    static int commentNesting = 0;
+}
+SKIP : /*** Ignoring spaces/tabs/newlines ***/
+{
+    " "
+    | "\t"
+    | "\n"
+    | "\r"
+    | "\f"
+    | < "//" (~["\n","\r"])* ("\n" | "\r" | "\r\n") >
+}
+
+SKIP : /* COMMENTS */
+{
+    "/*" { commentNesting++; } : IN_COMMENT
+}
+<IN_COMMENT> SKIP :
+{
+    "/*" { commentNesting++; }
+    | "*/" { commentNesting--;
+        if (commentNesting == 0)
+        SwitchTo(DEFAULT);
+    }
+    | <~[]>
+}
+TOKEN : /* Keywords and punctuation */
+{
+    < SEMIC : ";" >
+    | < COLON : ":" >
+    | < ASSIGN : ":=" >
+    | < PRINT : "print" >
+    | < LBR : "(" >
+    | < RBR : ")" >
+    | < COMMA : "," >
+    | < PLUS_SIGN : "+" >
+    | < MINUS_SIGN : "-" >
+    | < DIV_SIGN : "/" >
+}
+
+TOKEN [IGNORE_CASE]: /* Keywords */
+{
+    < RETURN : "return" >
+    | < MAIN : "main" >
+    | < BEGIN : "begin" >
+    | < END : "end" >
+    | < VARIABLE : "variable" >
+    | < CONSTANT : "constant" >
+    | < TYPE : ("integer" | "boolean") >
+    | < IS : "is" >
+    | < BOOL : "true" | "false" >
+    | < IF : "if" >
+    | < ELSE : "else" >
+    | < WHILE : "while" > 
+    | < SKIP_WORD : "skip" > 
+}
+
+TOKEN: /* Logical Operators */
+{
+    < LOG_NEG : "~" > // logical negation
+    | < LOG_DIS : "|" > // logical disjunction
+    | < LOG_AND : "&" > // logical and
+}
+
+TOKEN: /* Comparison Operators */
+{
+    < EQUALS : "=" > // logical equals
+    | < NOT_EQUALS : "!=" > // not equals
+    | < LESS_THAN : "<" > // less than
+    | < LESS_EQUALS: "<=" > // less than or equals 
+    | < GREATER_THAN: ">" > // greater than
+    | < GREATER_EQUALS: ">=" > // greater than or equals
+}
+
+TOKEN : /* Numbers and identifiers */
+{
+    < NUM : ("-")*(<DIGIT>)+ > // num can start with a minus
+    | < #DIGIT : ["0" - "9"] >
+    | < ID : <LETTER> (<LETTER> | <DIGIT>)* >
+    | < #LETTER : ["a" - "z", "A" - "Z", "_"] >
+}
+
+TOKEN : /* Anything not recognised so far */
+{
+    < OTHER : ~[] >
+}
+/***********************************
+***** SECTION 4 - THE GRAMMAR *****
+***********************************/
+
+void Prog() : {}
+{
+    code() <EOF>
+}
+
+void code() : {}
+{
+    (block() [code()])
+}
+
+void block() : {}
+{
+    decl_list()
+    | func_list()
+    | main_statement()
+}
+
+void decl_list() : {}
+{
+    (decl() [<SEMIC> decl_list()])
+}
+
+void decl() : {}
+{
+    var_decl()
+    | const_decl()
+}
+
+void var_decl() : {}
+{
+    (<VARIABLE> [<ID> <COLON> <TYPE> <SEMIC>])
+}
+
+void const_decl() : {}
+{
+    (<CONSTANT> [<ID> <COLON> <TYPE> <ASSIGN> expr() <SEMIC>])
+}
+
+void func_list() : {}
+{
+    (func() [func_list()])
+}
+
+void func() : {}
+{
+    <TYPE> <ID> <LBR> (param_list())* <RBR> <IS> (decl_list())* (statement_block())
+}
+
+void statement_block() : {}
+{
+    (statement() [statement_block()])
+}
+
+void statement() : {}
+{
+    LOOKAHEAD(2) (<ID> <ASSIGN> expr() <SEMIC>)
+    | LOOKAHEAD(2) <ID> <LBR> (expr())* <RBR> <SEMIC>
+    | <BEGIN> (statement_block())* return_statement() <END>
+    | <IF> condition() <BEGIN> (statement_block())* <END>
+    | <ELSE> <BEGIN> (statement_block()) * <END>
+    | <WHILE> condition() <BEGIN> (statement_block())* <END>
+    | <SKIP_WORD> <SEMIC>
+}
+
+void condition() : {} 
+{
+    simple_condition() (log_ops() simple_condition())*
+}
+
+void simple_condition() : {}
+{
+    <LOG_NEG> condition()
+    | <LBR> condition() <RBR>
+    | expr() comp_ops() expr()
+}
+
+void comp_ops() : {} 
+{
+    <EQUALS>
+    | <NOT_EQUALS>
+    | <LESS_THAN>
+    | <LESS_EQUALS>
+    | <GREATER_THAN>
+    | <GREATER_EQUALS>
+}
+
+void log_ops() : {}
+{
+    <LOG_DIS>
+    | <LOG_AND>
+}
+
+void expr() : {}
+{
+    LOOKAHEAD(3) fragment() bin_op() fragment()
+    | LOOKAHEAD(2) (<ID>)* <LBR> expr() <RBR>
+    | arg_list()
+    | fragment()
+}
+
+void arg_list() : {}
+{
+    nemp_arg_list()
+}
+
+void nemp_arg_list() : {}
+{
+    (<ID> (<COMMA> nemp_arg_list())*)
+}
+
+void fragment() : {}
+{
+    <ID>
+    | <MINUS_SIGN> <ID>
+    | <NUM>
+    | <BOOL>
+}
+
+void bin_op() : {}
+{
+    <PLUS_SIGN> 
+    | <MINUS_SIGN>
+}
+
+void param_list() : {}
+{
+    (nemp_param_list())
+}
+
+void nemp_param_list() : {}
+{
+    param() [<COMMA> nemp_param_list()]
+}
+
+void param() : {} 
+{
+    <ID> <COLON> <TYPE>
+}
+
+void return_statement() : {} 
+{ 
+    <RETURN> <LBR> (expr())* <RBR> <SEMIC>
+}
+
+void main_statement() : {} 
+{
+    <MAIN> <BEGIN> (decl_list())* (statement_block())* <END>
+}

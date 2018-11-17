@@ -27,63 +27,61 @@ public interface SLPParserConstants {
   /** RegularExpression Id. */
   int MINUS_SIGN = 19;
   /** RegularExpression Id. */
-  int MULT_SIGN = 20;
+  int DIV_SIGN = 20;
   /** RegularExpression Id. */
-  int DIV_SIGN = 21;
+  int RETURN = 21;
   /** RegularExpression Id. */
-  int RETURN = 22;
+  int MAIN = 22;
   /** RegularExpression Id. */
-  int MAIN = 23;
+  int BEGIN = 23;
   /** RegularExpression Id. */
-  int BEGIN = 24;
+  int END = 24;
   /** RegularExpression Id. */
-  int END = 25;
+  int VARIABLE = 25;
   /** RegularExpression Id. */
-  int VARIABLE = 26;
+  int CONSTANT = 26;
   /** RegularExpression Id. */
-  int CONSTANT = 27;
+  int TYPE = 27;
   /** RegularExpression Id. */
-  int TYPE = 28;
+  int IS = 28;
   /** RegularExpression Id. */
-  int IS = 29;
+  int BOOL = 29;
   /** RegularExpression Id. */
-  int BOOL = 30;
+  int IF = 30;
   /** RegularExpression Id. */
-  int IF = 31;
+  int ELSE = 31;
   /** RegularExpression Id. */
-  int ELSE = 32;
+  int WHILE = 32;
   /** RegularExpression Id. */
-  int WHILE = 33;
+  int SKIP_WORD = 33;
   /** RegularExpression Id. */
-  int SKIP_WORD = 34;
+  int LOG_NEG = 34;
   /** RegularExpression Id. */
-  int LOG_NEG = 35;
+  int LOG_DIS = 35;
   /** RegularExpression Id. */
-  int LOG_DIS = 36;
+  int LOG_AND = 36;
   /** RegularExpression Id. */
-  int LOG_AND = 37;
+  int EQUALS = 37;
   /** RegularExpression Id. */
-  int EQUALS = 38;
+  int NOT_EQUALS = 38;
   /** RegularExpression Id. */
-  int NOT_EQUALS = 39;
+  int LESS_THAN = 39;
   /** RegularExpression Id. */
-  int LESS_THAN = 40;
+  int LESS_EQUALS = 40;
   /** RegularExpression Id. */
-  int LESS_EQUALS = 41;
+  int GREATER_THAN = 41;
   /** RegularExpression Id. */
-  int GREATER_THAN = 42;
+  int GREATER_EQUALS = 42;
   /** RegularExpression Id. */
-  int GREATER_EQUALS = 43;
+  int NUM = 43;
   /** RegularExpression Id. */
-  int NUM = 44;
+  int DIGIT = 44;
   /** RegularExpression Id. */
-  int DIGIT = 45;
+  int ID = 45;
   /** RegularExpression Id. */
-  int ID = 46;
+  int LETTER = 46;
   /** RegularExpression Id. */
-  int LETTER = 47;
-  /** RegularExpression Id. */
-  int OTHER = 48;
+  int OTHER = 47;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -112,7 +110,6 @@ public interface SLPParserConstants {
     "\",\"",
     "\"+\"",
     "\"-\"",
-    "\"*\"",
     "\"/\"",
     "\"return\"",
     "\"main\"",

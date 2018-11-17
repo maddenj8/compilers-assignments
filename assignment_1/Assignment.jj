@@ -72,7 +72,6 @@ TOKEN : /* Keywords and punctuation */
     | < COMMA : "," >
     | < PLUS_SIGN : "+" >
     | < MINUS_SIGN : "-" >
-    | < MULT_SIGN : "*" > // TODO take this one out and make multiply function later
     | < DIV_SIGN : "/" >
 }
 
@@ -242,7 +241,6 @@ void fragment() : {}
     | <MINUS_SIGN> <ID>
     | <NUM>
     | <BOOL>
-    //| LOOKAHEAD(2) expr()
 }
 
 void bin_op() : {}
