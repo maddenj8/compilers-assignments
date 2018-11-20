@@ -3,8 +3,12 @@ import java.util.*;
 public class SymbolTable {
     Stack<String> stack = new Stack<String>();
     Hashtable<String, String> table = new Hashtable<String, String>();
+
+    public SymbolTable() {
+        stack.push("$");
+    }
     public void insert(String type, String varName) throws Exception {
-        if (check(varName)) {
+        if (!check(varName)) {
             table.put(type, varName); 
             stack.push(type + " " + varName);
         }
@@ -38,6 +42,7 @@ public class SymbolTable {
         while (stackItem != "$") {
             String [] splitItems = stackItem.split(" ");
             table.put(splitItems[0], splitItems[1]);
+            stackItem = tmp.pop();
         }
         /*
          * now the stack has the proper scope from before the new scope was made
@@ -46,6 +51,25 @@ public class SymbolTable {
     }
 
     public static void main(String [] args) {
-        System.out.println("Test this later");
+        try {
+            SymbolTable symbolTable = new SymbolTable();
+            symbolTable.insert("int", "a");
+            symbolTable.insert("String", "i");
+            // symbolTable.insert("String", "a"); // should throw an error
+            System.out.println(symbolTable.check("i")); // true
+            symbolTable.newScope();
+            System.out.println("NEW SCOPE STARTED");
+            System.out.println(symbolTable.check("a")); // false
+            symbolTable.insert("int", "a");
+            System.out.println(symbolTable.check("i")); // false
+            System.out.println(symbolTable.check("a")); // true
+            symbolTable.endScope();
+            System.out.println("END SCOPE");
+            System.out.println(symbolTable.check("i")); // true
+            System.out.println(symbolTable.check("a")); // true
+
+
+        }
+        catch (Exception e) {e.printStackTrace();}
     }
 }
