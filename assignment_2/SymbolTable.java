@@ -67,8 +67,6 @@ public class SymbolTable {
             System.out.println("END SCOPE");
             System.out.println(symbolTable.check("i")); // true
             System.out.println(symbolTable.check("a")); // true
-
-
         }
         catch (Exception e) {e.printStackTrace();}
     }
