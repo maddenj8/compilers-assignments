@@ -2,14 +2,44 @@
 public interface SLPParserTreeConstants
 {
   public int JJTPROGRAM = 0;
-  public int JJTVOID = 1;
-  public int JJTVAR = 2;
+  public int JJTCODE = 1;
+  public int JJTBLOCK = 2;
+  public int JJTDECL_LIST = 3;
+  public int JJTDECL = 4;
+  public int JJTFUNC_LIST = 5;
+  public int JJTFUNC = 6;
+  public int JJTPARAM_LIST = 7;
+  public int JJTNEMP_PARAM_LIST = 8;
+  public int JJTPARAM = 9;
+  public int JJTVAR = 10;
+  public int JJTVAR_DECL = 11;
+  public int JJTCONST_DECL = 12;
+  public int JJTCONDITION = 13;
+  public int JJTSIMPLE_CONDITION = 14;
+  public int JJTCOMP_OPS = 15;
+  public int JJTLOG_OPS = 16;
+  public int JJTID = 17;
 
 
   public String[] jjtNodeName = {
     "PROGRAM",
-    "VOID",
+    "code",
+    "BLOCK",
+    "decl_list",
+    "decl",
+    "func_list",
+    "func",
+    "param_list",
+    "nemp_param_list",
+    "param",
     "VAR",
+    "var_decl",
+    "const_decl",
+    "condition",
+    "simple_condition",
+    "comp_ops",
+    "log_ops",
+    "id",
   };
 }
-/* JavaCC - OriginalChecksum=8b0ce43dd2517851f3a0a9a9f038fe26 (do not edit this line) */
+/* JavaCC - OriginalChecksum=24c39a8ffa37bd21ec25997b0580b0b8 (do not edit this line) */

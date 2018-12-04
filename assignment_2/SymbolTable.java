@@ -7,13 +7,18 @@ public class SymbolTable {
     public SymbolTable() {
         stack.push("$");
     }
-    public void insert(String type, String varName) throws Exception {
+    public void insert(String type, String varName) {
         if (!check(varName)) {
             table.put(type, varName); 
             stack.push(type + " " + varName);
         }
-        else
-            throw new Exception("Variable Name already declared in scope"); // throw error
+    }
+    public String get(String varName) {
+        for (Object o : table.entrySet()) {
+            Map.Entry entry = (Map.Entry) o;
+            if (entry.getValue().equals(varName)) {return entry.getKey().toString();}
+        }
+        return null;
     }
     public Boolean check(String varName) {
         return table.contains(varName);
@@ -67,6 +72,8 @@ public class SymbolTable {
             System.out.println("END SCOPE");
             System.out.println(symbolTable.check("i")); // true
             System.out.println(symbolTable.check("a")); // true
+            System.out.println(symbolTable.get("a")); // int
+            System.out.println(symbolTable.get("b")); // null
         }
         catch (Exception e) {e.printStackTrace();}
     }
