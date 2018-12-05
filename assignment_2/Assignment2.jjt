@@ -121,12 +121,12 @@ SimpleNode Prog() #PROGRAM : {}
     code() <EOF> {return jjtThis;}
 }
 
-void code()  : {}
+void code() #void : {}
 {
-    (block() [code()])
+    (block() [code() #code(2)])
 }
 
-void block() #BLOCK : {}
+void block() #void : {}
 {
     decl_list()
     | func_list()
@@ -144,8 +144,27 @@ void decl()  : {}
     | const_decl()
 }
 
+/** DECLARATION **/
+void var_decl() #void : { Token t; String name; }
+{
+    <VARIABLE> name = id() <COLON> t = <TYPE>
+        {
+            jjtThis.value = t.image;
+            ST.insert(t.image, name); 
+        } #VAR(1)
+}
+
+void const_decl() #void : { Token t; String name; }
+{
+    <CONSTANT> name = id() <COLON> t = <TYPE>
+        {
+            jjtThis.value = t.image;
+            ST.insert(t.image, name); 
+        } #CONST(1)
+}
+
 /** FUNCTION **/
-void func_list() : {}
+void func_list() #void : {}
 {
     (func() [func_list()])
 }
@@ -153,7 +172,7 @@ void func_list() : {}
 void func() : {}
 {
     { ST.newScope(); }
-    <TYPE> <ID> <LBR> (param_list())* <RBR> <IS> (decl_list())*
+    <TYPE> <ID> <LBR> (param_list())* <RBR> <IS> (decl_list())* (statement_block())*
     { ST.endScope(); }
 }
 
@@ -172,27 +191,8 @@ void param() : {Token t; String name;}
     name = id() <COLON> t = <TYPE>
         {
             jjtThis.value = t.image;
-            ST.insert(t.image, name); // move to type checker
+            ST.insert(t.image, name); 
         } #VAR(1)
-}
-
-/** DECLARATION **/
-void var_decl()  : { Token t; String name; }
-{
-    <VARIABLE> name = id() <COLON> t = <TYPE>
-        {
-            jjtThis.value = t.image;
-            ST.insert(t.image, name); // move to type checker
-        } #VAR(1)
-}
-
-void const_decl() : { Token t; String name; }
-{
-    <CONSTANT> name = id() <COLON> t = <TYPE>
-        {
-            jjtThis.value = t.image;
-            ST.insert(t.image, name); // move to type checker
-        }
 }
 
 /** CONDITION **/
@@ -222,6 +222,60 @@ void log_ops() : {}
 {
     <LOG_DIS>
     | <LOG_AND>
+}
+
+/** MAIN STATEMENT **/
+void main_statement() : {} 
+{
+    <MAIN> <BEGIN> (decl_list())* (statement_block())* <END>
+}
+
+void statement_block() : {}
+{
+    (statement() [statement_block()])
+}
+
+void statement() : {}
+{
+    LOOKAHEAD(2) (id() <ASSIGN> expr() <SEMIC>)
+    | LOOKAHEAD(2) id() <LBR> (expr())* <RBR> <SEMIC>
+    //| <BEGIN> (statement_block())* return_statement() <END>
+    //| <IF> condition() <BEGIN> (statement_block())* <END>
+    //| <ELSE> <BEGIN> (statement_block()) * <END>
+    //| <WHILE> condition() <BEGIN> (statement_block())* <END>
+    //| <SKIP_WORD> <SEMIC>
+}
+
+void expr() : {}
+{
+    LOOKAHEAD(3) fragment() bin_op() fragment()
+    //| LOOKAHEAD(2) (id())* <LBR> expr() <RBR>
+    | arg_list()
+    | fragment()
+}
+
+void arg_list() : {}
+{
+    nemp_arg_list()
+}
+
+void nemp_arg_list() : {}
+{
+    (id() (<COMMA> nemp_arg_list())*)
+}
+
+void bin_op() : {}
+{
+    <PLUS_SIGN> 
+    | <MINUS_SIGN>
+}
+
+void fragment() : {}
+{
+    id()
+    | <MINUS_SIGN> id()
+    | <NUM>
+    | <BOOL>
 }
 
 /** SIMPLE TOKENS **/

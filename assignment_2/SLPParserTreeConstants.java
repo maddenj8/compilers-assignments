@@ -2,44 +2,56 @@
 public interface SLPParserTreeConstants
 {
   public int JJTPROGRAM = 0;
-  public int JJTCODE = 1;
-  public int JJTBLOCK = 2;
+  public int JJTVOID = 1;
+  public int JJTCODE = 2;
   public int JJTDECL_LIST = 3;
   public int JJTDECL = 4;
-  public int JJTFUNC_LIST = 5;
-  public int JJTFUNC = 6;
-  public int JJTPARAM_LIST = 7;
-  public int JJTNEMP_PARAM_LIST = 8;
-  public int JJTPARAM = 9;
-  public int JJTVAR = 10;
-  public int JJTVAR_DECL = 11;
-  public int JJTCONST_DECL = 12;
-  public int JJTCONDITION = 13;
-  public int JJTSIMPLE_CONDITION = 14;
-  public int JJTCOMP_OPS = 15;
-  public int JJTLOG_OPS = 16;
-  public int JJTID = 17;
+  public int JJTVAR = 5;
+  public int JJTCONST = 6;
+  public int JJTFUNC = 7;
+  public int JJTPARAM_LIST = 8;
+  public int JJTNEMP_PARAM_LIST = 9;
+  public int JJTPARAM = 10;
+  public int JJTCONDITION = 11;
+  public int JJTSIMPLE_CONDITION = 12;
+  public int JJTCOMP_OPS = 13;
+  public int JJTLOG_OPS = 14;
+  public int JJTMAIN_STATEMENT = 15;
+  public int JJTSTATEMENT_BLOCK = 16;
+  public int JJTSTATEMENT = 17;
+  public int JJTEXPR = 18;
+  public int JJTARG_LIST = 19;
+  public int JJTNEMP_ARG_LIST = 20;
+  public int JJTBIN_OP = 21;
+  public int JJTFRAGMENT = 22;
+  public int JJTID = 23;
 
 
   public String[] jjtNodeName = {
     "PROGRAM",
+    "void",
     "code",
-    "BLOCK",
     "decl_list",
     "decl",
-    "func_list",
+    "VAR",
+    "CONST",
     "func",
     "param_list",
     "nemp_param_list",
     "param",
-    "VAR",
-    "var_decl",
-    "const_decl",
     "condition",
     "simple_condition",
     "comp_ops",
     "log_ops",
+    "main_statement",
+    "statement_block",
+    "statement",
+    "expr",
+    "arg_list",
+    "nemp_arg_list",
+    "bin_op",
+    "fragment",
     "id",
   };
 }
-/* JavaCC - OriginalChecksum=24c39a8ffa37bd21ec25997b0580b0b8 (do not edit this line) */
+/* JavaCC - OriginalChecksum=97ab43585fb0c7ab572fe5baf41fe830 (do not edit this line) */

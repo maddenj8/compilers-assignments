@@ -4,21 +4,26 @@ public interface SLPParserVisitor
   public Object visit(SimpleNode node, Object data);
   public Object visit(ASTPROGRAM node, Object data);
   public Object visit(ASTcode node, Object data);
-  public Object visit(ASTBLOCK node, Object data);
   public Object visit(ASTdecl_list node, Object data);
   public Object visit(ASTdecl node, Object data);
-  public Object visit(ASTfunc_list node, Object data);
+  public Object visit(ASTVAR node, Object data);
+  public Object visit(ASTCONST node, Object data);
   public Object visit(ASTfunc node, Object data);
   public Object visit(ASTparam_list node, Object data);
   public Object visit(ASTnemp_param_list node, Object data);
   public Object visit(ASTparam node, Object data);
-  public Object visit(ASTVAR node, Object data);
-  public Object visit(ASTvar_decl node, Object data);
-  public Object visit(ASTconst_decl node, Object data);
   public Object visit(ASTcondition node, Object data);
   public Object visit(ASTsimple_condition node, Object data);
   public Object visit(ASTcomp_ops node, Object data);
   public Object visit(ASTlog_ops node, Object data);
+  public Object visit(ASTmain_statement node, Object data);
+  public Object visit(ASTstatement_block node, Object data);
+  public Object visit(ASTstatement node, Object data);
+  public Object visit(ASTexpr node, Object data);
+  public Object visit(ASTarg_list node, Object data);
+  public Object visit(ASTnemp_arg_list node, Object data);
+  public Object visit(ASTbin_op node, Object data);
+  public Object visit(ASTfragment node, Object data);
   public Object visit(ASTid node, Object data);
 }
-/* JavaCC - OriginalChecksum=9e6dd9ac71c6eb90aac2400dd5ad3b67 (do not edit this line) */
+/* JavaCC - OriginalChecksum=f319d29f061eb0cf557caa1be64ede49 (do not edit this line) */
