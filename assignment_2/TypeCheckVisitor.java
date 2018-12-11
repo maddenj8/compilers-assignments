@@ -17,25 +17,27 @@ public class TypeCheckVisitor implements SLPParserVisitor {
         return DataType.Program;
     }
     public Object visit(ASTcode node, Object data) {
+        System.out.print("From the code Node");
+        System.out.println(node.jjtGetChild(0));
         if ((DataType) node.jjtGetChild(0).jjtAccept(this, data) == DataType.TypeUnknown) {
             System.out.println("Type Error");
         }
-        return node.jjtGetChild(1).jjtAccept(this, data);
+        // return node.jjtGetChild(1).jjtAccept(this, data); // keep looking through the children there must be something wrong with not accepting them.
+        return (node.jjtGetChild(0).jjtAccept(this, data));
     }
     public Object visit(ASTdecl_list node, Object data) {
-        return node.jjtGetChild(0).jjtAccept(this, data);
+        return (node.jjtGetChild(0).jjtAccept(this, data));
     }
     public Object visit(ASTdecl node, Object data) {
-        return node.jjtGetChild(0).jjtAccept(this, data);
+        System.out.print("From the decl Node: ");
+        return (node.jjtGetChild(0).jjtAccept(this, data));
     }
     public Object visit(ASTVAR node, Object data) {
         System.out.println("Visited a Variable declaration Node");
-        node.jjtGetChild(0).jjtAccept(this, data);
         return DataType.Declaration;
     }
     public Object visit(ASTCONST node, Object data) {
         System.out.println("Visited a Constant declaration Node");
-        node.jjtGetChild(0).jjtAccept(this,data);
         return DataType.Declaration;    
     }
     public Object visit(ASTfunc node, Object data) {return null;}
@@ -54,5 +56,7 @@ public class TypeCheckVisitor implements SLPParserVisitor {
     public Object visit(ASTnemp_arg_list node, Object data) {return null;}
     public Object visit(ASTbin_op node, Object data) {return null;}
     public Object visit(ASTfragment node, Object data) {return null;}
-    public Object visit(ASTid node, Object data) {return DataType.TypeInteger;}
+    public Object visit(ASTid node, Object data) {
+        return node.value;
+    }
 }

@@ -158,54 +158,15 @@ SimpleNode Prog()          : {/*@bgen(jjtree) PROGRAM */
 /*@egen*/
 }
 
-void code()       : {}
-{
-    (block() [/*@bgen(jjtree) #code( 2) */
-              {
-                ASTcode jjtn001 = new ASTcode(JJTCODE);
-                boolean jjtc001 = true;
-                jjtree.openNodeScope(jjtn001);
-              }
-              try {
-/*@egen*/code()/*@bgen(jjtree)*/
-              } catch (Throwable jjte001) {
-                if (jjtc001) {
-                  jjtree.clearNodeScope(jjtn001);
-                  jjtc001 = false;
-                } else {
-                  jjtree.popNode();
-                }
-                if (jjte001 instanceof RuntimeException) {
-                  throw (RuntimeException)jjte001;
-                }
-                if (jjte001 instanceof ParseException) {
-                  throw (ParseException)jjte001;
-                }
-                throw (Error)jjte001;
-              } finally {
-                if (jjtc001) {
-                  jjtree.closeNodeScope(jjtn001,  2);
-                }
-              }
-/*@egen*/         ])
-}
-
-void block()       : {}
-{
-    decl_list()
-    | func_list()
-    | main_statement()
-}
-
-void decl_list() : {/*@bgen(jjtree) decl_list */
-  ASTdecl_list jjtn000 = new ASTdecl_list(JJTDECL_LIST);
+void code() : {/*@bgen(jjtree) code */
+  ASTcode jjtn000 = new ASTcode(JJTCODE);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
 /*@egen*/}
-{/*@bgen(jjtree) decl_list */
+{/*@bgen(jjtree) code */
     try {
 /*@egen*/
-    (decl() <SEMIC> [decl_list()])/*@bgen(jjtree)*/
+    (block() [code()])/*@bgen(jjtree)*/
     } catch (Throwable jjte000) {
       if (jjtc000) {
         jjtree.clearNodeScope(jjtn000);
@@ -228,7 +189,46 @@ void decl_list() : {/*@bgen(jjtree) decl_list */
 /*@egen*/
 }
 
-void decl()  : {/*@bgen(jjtree) decl */
+void block()       : {}
+{
+    decl_list()
+    | func_list()
+    | main_statement()
+}
+
+void decl_list()       : {}
+{
+    (decl() <SEMIC> [/*@bgen(jjtree) #decl_list( 2) */
+                     {
+                       ASTdecl_list jjtn001 = new ASTdecl_list(JJTDECL_LIST);
+                       boolean jjtc001 = true;
+                       jjtree.openNodeScope(jjtn001);
+                     }
+                     try {
+/*@egen*/decl_list()/*@bgen(jjtree)*/
+                     } catch (Throwable jjte001) {
+                       if (jjtc001) {
+                         jjtree.clearNodeScope(jjtn001);
+                         jjtc001 = false;
+                       } else {
+                         jjtree.popNode();
+                       }
+                       if (jjte001 instanceof RuntimeException) {
+                         throw (RuntimeException)jjte001;
+                       }
+                       if (jjte001 instanceof ParseException) {
+                         throw (ParseException)jjte001;
+                       }
+                       throw (Error)jjte001;
+                     } finally {
+                       if (jjtc001) {
+                         jjtree.closeNodeScope(jjtn001,  2);
+                       }
+                     }
+/*@egen*/              ])
+}
+
+void decl() : {/*@bgen(jjtree) decl */
   ASTdecl jjtn000 = new ASTdecl(JJTDECL);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);

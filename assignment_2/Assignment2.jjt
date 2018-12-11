@@ -123,9 +123,9 @@ SimpleNode Prog() #PROGRAM : {}
     code() <EOF> {return jjtThis;}
 }
 
-void code() #void : {}
+void code() : {}
 {
-    (block() [code() #code(2)])
+    (block() [code()])
 }
 
 void block() #void : {}
@@ -135,12 +135,12 @@ void block() #void : {}
     | main_statement()
 }
 
-void decl_list() : {}
+void decl_list() #void : {}
 {
-    (decl() <SEMIC> [decl_list()])
+    (decl() <SEMIC> [decl_list() #decl_list(2)])
 }
 
-void decl()  : {}
+void decl() : {}
 {
     var_decl()  
     | const_decl()

@@ -1,5 +1,7 @@
 variable x:integer;
 variable y:boolean;
+variable y:boolean;
+variable y:boolean;
 constant a:integer;
 constant b:boolean;
 variable i:integer;

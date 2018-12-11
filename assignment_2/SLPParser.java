@@ -55,77 +55,21 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
   }
 
   static final public void code() throws ParseException {
-    block();
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case MAIN:
-    case VARIABLE:
-    case CONSTANT:
-    case TYPE:
-                ASTcode jjtn001 = new ASTcode(JJTCODE);
-                boolean jjtc001 = true;
-                jjtree.openNodeScope(jjtn001);
-      try {
-        code();
-      } catch (Throwable jjte001) {
-                if (jjtc001) {
-                  jjtree.clearNodeScope(jjtn001);
-                  jjtc001 = false;
-                } else {
-                  jjtree.popNode();
-                }
-                if (jjte001 instanceof RuntimeException) {
-                  {if (true) throw (RuntimeException)jjte001;}
-                }
-                if (jjte001 instanceof ParseException) {
-                  {if (true) throw (ParseException)jjte001;}
-                }
-                {if (true) throw (Error)jjte001;}
-      } finally {
-                if (jjtc001) {
-                  jjtree.closeNodeScope(jjtn001,  2);
-                }
-      }
-      break;
-    default:
-      jj_la1[0] = jj_gen;
-      ;
-    }
-  }
-
-  static final public void block() throws ParseException {
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case VARIABLE:
-    case CONSTANT:
-      decl_list();
-      break;
-    case TYPE:
-      func_list();
-      break;
-    case MAIN:
-      main_statement();
-      break;
-    default:
-      jj_la1[1] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
-  }
-
-  static final public void decl_list() throws ParseException {
-                    /*@bgen(jjtree) decl_list */
-  ASTdecl_list jjtn000 = new ASTdecl_list(JJTDECL_LIST);
+               /*@bgen(jjtree) code */
+  ASTcode jjtn000 = new ASTcode(JJTCODE);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
     try {
-      decl();
-      jj_consume_token(SEMIC);
+      block();
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case MAIN:
       case VARIABLE:
       case CONSTANT:
-        decl_list();
+      case TYPE:
+        code();
         break;
       default:
-        jj_la1[2] = jj_gen;
+        jj_la1[0] = jj_gen;
         ;
       }
     } catch (Throwable jjte000) {
@@ -149,8 +93,64 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
     }
   }
 
+  static final public void block() throws ParseException {
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case VARIABLE:
+    case CONSTANT:
+      decl_list();
+      break;
+    case TYPE:
+      func_list();
+      break;
+    case MAIN:
+      main_statement();
+      break;
+    default:
+      jj_la1[1] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+  }
+
+  static final public void decl_list() throws ParseException {
+    decl();
+    jj_consume_token(SEMIC);
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case VARIABLE:
+    case CONSTANT:
+                       ASTdecl_list jjtn001 = new ASTdecl_list(JJTDECL_LIST);
+                       boolean jjtc001 = true;
+                       jjtree.openNodeScope(jjtn001);
+      try {
+        decl_list();
+      } catch (Throwable jjte001) {
+                       if (jjtc001) {
+                         jjtree.clearNodeScope(jjtn001);
+                         jjtc001 = false;
+                       } else {
+                         jjtree.popNode();
+                       }
+                       if (jjte001 instanceof RuntimeException) {
+                         {if (true) throw (RuntimeException)jjte001;}
+                       }
+                       if (jjte001 instanceof ParseException) {
+                         {if (true) throw (ParseException)jjte001;}
+                       }
+                       {if (true) throw (Error)jjte001;}
+      } finally {
+                       if (jjtc001) {
+                         jjtree.closeNodeScope(jjtn001,  2);
+                       }
+      }
+      break;
+    default:
+      jj_la1[2] = jj_gen;
+      ;
+    }
+  }
+
   static final public void decl() throws ParseException {
-                /*@bgen(jjtree) decl */
+               /*@bgen(jjtree) decl */
   ASTdecl jjtn000 = new ASTdecl(JJTDECL);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);

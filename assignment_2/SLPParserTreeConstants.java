@@ -2,8 +2,8 @@
 public interface SLPParserTreeConstants
 {
   public int JJTPROGRAM = 0;
-  public int JJTVOID = 1;
-  public int JJTCODE = 2;
+  public int JJTCODE = 1;
+  public int JJTVOID = 2;
   public int JJTDECL_LIST = 3;
   public int JJTDECL = 4;
   public int JJTVAR = 5;
@@ -29,8 +29,8 @@ public interface SLPParserTreeConstants
 
   public String[] jjtNodeName = {
     "PROGRAM",
-    "void",
     "code",
+    "void",
     "decl_list",
     "decl",
     "VAR",
@@ -54,4 +54,4 @@ public interface SLPParserTreeConstants
     "id",
   };
 }
-/* JavaCC - OriginalChecksum=97ab43585fb0c7ab572fe5baf41fe830 (do not edit this line) */
+/* JavaCC - OriginalChecksum=c0071060a67756be1e092acf70fb2df0 (do not edit this line) */
