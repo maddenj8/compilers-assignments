@@ -277,8 +277,9 @@ void var_decl()       : { Token t; String name; }
         }
 /*@egen*/
         {
+            System.out.println(ST.check(name));
             jjtn001.value = t.image;
-            ST.insert(t.image, name); 
+            ST.insert(String.valueOf(t.image), String.valueOf(name)); 
         }/*@bgen(jjtree)*/
         } finally {
           if (jjtc001) {
@@ -305,7 +306,7 @@ void const_decl()       : { Token t; String name; }
 /*@egen*/
         {
             jjtn001.value = t.image;
-            ST.insert(t.image, name); 
+            ST.insert(String.valueOf(t.image), String.valueOf(name)); 
         }/*@bgen(jjtree)*/
         } finally {
           if (jjtc001) {

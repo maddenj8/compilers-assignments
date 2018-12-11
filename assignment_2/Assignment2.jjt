@@ -151,8 +151,9 @@ void var_decl() #void : { Token t; String name; }
 {
     <VARIABLE> name = id() <COLON> t = <TYPE>
         {
+            System.out.println(ST.check(name));
             jjtThis.value = t.image;
-            ST.insert(t.image, name); 
+            ST.insert(String.valueOf(t.image), String.valueOf(name)); 
         } #VAR(1)
 }
 
@@ -161,7 +162,7 @@ void const_decl() #void : { Token t; String name; }
     <CONSTANT> name = id() <COLON> t = <TYPE>
         {
             jjtThis.value = t.image;
-            ST.insert(t.image, name); 
+            ST.insert(String.valueOf(t.image), String.valueOf(name)); 
         } #CONST(1)
 }
 

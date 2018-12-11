@@ -28,6 +28,12 @@ public class SymbolTable {
         // start symbol for new scope
         stack.push("$"); 
     }
+    public void print() {
+        for (Object o:table.entrySet()) {
+            Map.Entry entry = (Map.Entry) o;
+            System.out.println(entry.getValue());
+        }
+    }
     public void endScope() {
         /*
          *Get rid of everything in the current scope

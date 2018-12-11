@@ -16,15 +16,15 @@ public class TypeCheckVisitor implements SLPParserVisitor {
         return DataType.Program;
     }
     public Object visit(ASTcode node, Object data) {
-        if ((DataType) node.jjtGetChild(0).jjtAccept(this, data) == DataType.TypeUnknown) {
-            System.out.println("Type Error");
-        }
-        // return node.jjtGetChild(1).jjtAccept(this, data); // keep looking through the children there must be something wrong with not accepting them.
+        // if ((DataType) node.jjtGetChild(0).jjtAccept(this, data) == DataType.TypeUnknown) {
+        //     System.out.println("Type Error");
+        // }
         return (node.jjtGetChild(0).jjtAccept(this, data));
     }
     public Object visit(ASTdecl_list node, Object data) {
         node.jjtGetChild(0).jjtAccept(this, data);
-        return (node.jjtGetChild(1).jjtAccept(this, data));
+        node.jjtGetChild(1).jjtAccept(this, data);
+        return data;
     }
     public Object visit(ASTdecl node, Object data) {
         return (node.jjtGetChild(0).jjtAccept(this, data));
@@ -56,7 +56,15 @@ public class TypeCheckVisitor implements SLPParserVisitor {
     public Object visit(ASTbin_op node, Object data) {return null;}
     public Object visit(ASTfragment node, Object data) {return null;}
     public Object visit(ASTid node, Object data) {
-        System.out.println(node.value);
+        SymbolTable ST = (SymbolTable) data;
+        System.out.println("#########################");
+        ST.print();
+        System.out.println("#########################");
+        if (ST.check(String.valueOf(node.value))) {
+            // variable has already been defined
+            System.out.println("Type Error: " + node.value + " has already been defined");
+            return null;
+        }
         return node.value;
     }
 }

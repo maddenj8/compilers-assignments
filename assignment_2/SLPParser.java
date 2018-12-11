@@ -201,8 +201,9 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
     try {
           jjtree.closeNodeScope(jjtn001,  1);
           jjtc001 = false;
+            System.out.println(ST.check(name));
             jjtn001.value = t.image;
-            ST.insert(t.image, name);
+            ST.insert(String.valueOf(t.image), String.valueOf(name));
     } finally {
           if (jjtc001) {
             jjtree.closeNodeScope(jjtn001,  1);
@@ -223,7 +224,7 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
           jjtree.closeNodeScope(jjtn001,  1);
           jjtc001 = false;
             jjtn001.value = t.image;
-            ST.insert(t.image, name);
+            ST.insert(String.valueOf(t.image), String.valueOf(name));
     } finally {
           if (jjtc001) {
             jjtree.closeNodeScope(jjtn001,  1);
@@ -947,12 +948,6 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
     finally { jj_save(2, xla); }
   }
 
-  static private boolean jj_3R_13() {
-    if (jj_scan_token(MINUS_SIGN)) return true;
-    if (jj_3R_9()) return true;
-    return false;
-  }
-
   static private boolean jj_3_2() {
     if (jj_3R_9()) return true;
     if (jj_scan_token(LBR)) return true;
@@ -1005,6 +1000,12 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
     jj_scanpos = xsp;
     if (jj_scan_token(19)) return true;
     }
+    return false;
+  }
+
+  static private boolean jj_3R_13() {
+    if (jj_scan_token(MINUS_SIGN)) return true;
+    if (jj_3R_9()) return true;
     return false;
   }
 
