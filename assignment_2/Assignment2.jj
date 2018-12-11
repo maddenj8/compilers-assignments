@@ -158,7 +158,7 @@ SimpleNode Prog()          : {/*@bgen(jjtree) PROGRAM */
 /*@egen*/
 }
 
-void code() : {/*@bgen(jjtree) code */
+void code()       : {/*@bgen(jjtree) code */
   ASTcode jjtn000 = new ASTcode(JJTCODE);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);

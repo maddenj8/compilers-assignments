@@ -55,7 +55,7 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
   }
 
   static final public void code() throws ParseException {
-               /*@bgen(jjtree) code */
+                     /*@bgen(jjtree) code */
   ASTcode jjtn000 = new ASTcode(JJTCODE);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);

@@ -123,7 +123,7 @@ SimpleNode Prog() #PROGRAM : {}
     code() <EOF> {return jjtThis;}
 }
 
-void code() : {}
+void code() #code : {}
 {
     (block() [code()])
 }
