@@ -3,9 +3,3 @@ variable y:boolean;
 constant a:integer;
 constant b:boolean;
 variable i:integer;
-
-boolean test_func(x:integer, y:boolean) is
-    variable x:integer;
-    variable y:integer;
-    x(y, z);
-    x:=-x;

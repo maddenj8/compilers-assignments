@@ -17,6 +17,8 @@ public class SLPParser {
         SLPParser parser = new SLPParser(new FileInputStream(args[0]));
         SimpleNode root = parser.Prog();
         root.dump("");
+        TypeCheckVisitor tc = new TypeCheckVisitor();
+        root.jjtAccept(tc, ST);
         // System.out.println(ST.check("x"));
         // System.out.println(ST.get("y")); 
     }
@@ -130,10 +132,10 @@ void block() #void : {}
 {
     decl_list()
     | func_list()
-    //| main_statement()
+    | main_statement()
 }
 
-void decl_list()  : {}
+void decl_list() : {}
 {
     (decl() <SEMIC> [decl_list()])
 }
@@ -172,7 +174,7 @@ void func_list() #void : {}
 void func() : {}
 {
     { ST.newScope(); }
-    <TYPE> <ID> <LBR> (param_list())* <RBR> <IS> (decl_list())* (statement_block())*
+        <TYPE> <ID> <LBR> (param_list())* <RBR> <IS> (decl_list())* (statement_block())*
     { ST.endScope(); }
 }
 

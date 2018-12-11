@@ -8,27 +8,51 @@
  **/
 
 public class TypeCheckVisitor implements SLPParserVisitor {
-    SymbolTable ST = new SymbolTable();
     public Object visit(SimpleNode node, Object data) {
-        throw RunTimeException("Visit Node");
+        throw new RuntimeException("Visiting Node");
     }
-    public Object visit(ASTdecl_list node, Object data) {}
+    public Object visit(ASTPROGRAM node, Object data) {
+        System.out.println("This is a program");
+        node.jjtGetChild(0).jjtAccept(this, data);
+        return DataType.Program;
+    }
+    public Object visit(ASTcode node, Object data) {
+        if ((DataType) node.jjtGetChild(0).jjtAccept(this, data) == DataType.TypeUnknown) {
+            System.out.println("Type Error");
+        }
+        return node.jjtGetChild(1).jjtAccept(this, data);
+    }
+    public Object visit(ASTdecl_list node, Object data) {
+        return node.jjtGetChild(0).jjtAccept(this, data);
+    }
     public Object visit(ASTdecl node, Object data) {
+        return node.jjtGetChild(0).jjtAccept(this, data);
+    }
+    public Object visit(ASTVAR node, Object data) {
+        System.out.println("Visited a Variable declaration Node");
+        node.jjtGetChild(0).jjtAccept(this, data);
         return DataType.Declaration;
     }
-    public Object visit(ASTfunc_list node, Object data) {}
-    public Object visit(ASTfunc node, Object data) {
-        
+    public Object visit(ASTCONST node, Object data) {
+        System.out.println("Visited a Constant declaration Node");
+        node.jjtGetChild(0).jjtAccept(this,data);
+        return DataType.Declaration;    
     }
-    public Object visit(ASTparam_list node, Object data) {}
-    public Object visit(ASTnemp_param_list node, Object data) {}
-    public Object visit(ASTparam node, Object data) {}
-    public Object visit(ASTVAR node, Object data) {}
-    public Object visit(ASTvar_decl node, Object data) {}
-    public Object visit(ASTconst_decl node, Object data) {}
-    public Object visit(ASTcondition node, Object data) {}
-    public Object visit(ASTsimple_condition node, Object data) {}
-    public Object visit(ASTcomp_ops node, Object data) {}
-    public Object visit(ASTlog_ops node, Object data) {}
-    public Object visit(ASTid node, Object data) {}
+    public Object visit(ASTfunc node, Object data) {return null;}
+    public Object visit(ASTparam_list node, Object data) {return null;}
+    public Object visit(ASTnemp_param_list node, Object data) {return null;}
+    public Object visit(ASTparam node, Object data) {return null;}
+    public Object visit(ASTcondition node, Object data) {return null;}
+    public Object visit(ASTsimple_condition node, Object data) {return null;}
+    public Object visit(ASTcomp_ops node, Object data) {return null;}
+    public Object visit(ASTlog_ops node, Object data) {return null;}
+    public Object visit(ASTmain_statement node, Object data) {return null;}
+    public Object visit(ASTstatement_block node, Object data) {return null;}
+    public Object visit(ASTstatement node, Object data) {return null;}
+    public Object visit(ASTexpr node, Object data) {return null;}
+    public Object visit(ASTarg_list node, Object data) {return null;}
+    public Object visit(ASTnemp_arg_list node, Object data) {return null;}
+    public Object visit(ASTbin_op node, Object data) {return null;}
+    public Object visit(ASTfragment node, Object data) {return null;}
+    public Object visit(ASTid node, Object data) {return DataType.TypeInteger;}
 }

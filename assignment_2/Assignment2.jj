@@ -21,6 +21,8 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants/*@egen*
         SLPParser parser = new SLPParser(new FileInputStream(args[0]));
         SimpleNode root = parser.Prog();
         root.dump("");
+        TypeCheckVisitor tc = new TypeCheckVisitor();
+        root.jjtAccept(tc, ST);
         // System.out.println(ST.check("x"));
         // System.out.println(ST.get("y")); 
     }
@@ -192,10 +194,10 @@ void block()       : {}
 {
     decl_list()
     | func_list()
-    //| main_statement()
+    | main_statement()
 }
 
-void decl_list()  : {/*@bgen(jjtree) decl_list */
+void decl_list() : {/*@bgen(jjtree) decl_list */
   ASTdecl_list jjtn000 = new ASTdecl_list(JJTDECL_LIST);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
@@ -328,7 +330,7 @@ void func() : {/*@bgen(jjtree) func */
     try {
 /*@egen*/
     { ST.newScope(); }
-    <TYPE> <ID> <LBR> (param_list())* <RBR> <IS> (decl_list())* (statement_block())*/*@bgen(jjtree)*/
+        <TYPE> <ID> <LBR> (param_list())* <RBR> <IS> (decl_list())* (statement_block())*/*@bgen(jjtree)*/
     {
       jjtree.closeNodeScope(jjtn000, true);
       jjtc000 = false;

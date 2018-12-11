@@ -12,6 +12,8 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
         SLPParser parser = new SLPParser(new FileInputStream(args[0]));
         SimpleNode root = parser.Prog();
         root.dump("");
+        TypeCheckVisitor tc = new TypeCheckVisitor();
+        root.jjtAccept(tc, ST);
         // System.out.println(ST.check("x"));
         // System.out.println(ST.get("y")); 
     }
@@ -55,6 +57,7 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
   static final public void code() throws ParseException {
     block();
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case MAIN:
     case VARIABLE:
     case CONSTANT:
     case TYPE:
@@ -98,6 +101,9 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
     case TYPE:
       func_list();
       break;
+    case MAIN:
+      main_statement();
+      break;
     default:
       jj_la1[1] = jj_gen;
       jj_consume_token(-1);
@@ -106,7 +112,7 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
   }
 
   static final public void decl_list() throws ParseException {
-                     /*@bgen(jjtree) decl_list */
+                    /*@bgen(jjtree) decl_list */
   ASTdecl_list jjtn000 = new ASTdecl_list(JJTDECL_LIST);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
@@ -941,16 +947,6 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
     finally { jj_save(2, xla); }
   }
 
-  static private boolean jj_3R_11() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_scan_token(18)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(19)) return true;
-    }
-    return false;
-  }
-
   static private boolean jj_3R_13() {
     if (jj_scan_token(MINUS_SIGN)) return true;
     if (jj_3R_9()) return true;
@@ -1002,6 +998,16 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
     return false;
   }
 
+  static private boolean jj_3R_11() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(18)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(19)) return true;
+    }
+    return false;
+  }
+
   static private boolean jj_initialized_once = false;
   /** Generated Token Manager. */
   static public SLPParserTokenManager token_source;
@@ -1022,7 +1028,7 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
       jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0xe000000,0xe000000,0x6000000,0x6000000,0x8000000,0x0,0x6000000,0x0,0x20000,0x0,0x8000,0x0,0x0,0x6000000,0x0,0x0,0x20080000,0x20080000,0x20000,0xc0000,0x20080000,};
+      jj_la1_0 = new int[] {0xe400000,0xe400000,0x6000000,0x6000000,0x8000000,0x0,0x6000000,0x0,0x20000,0x0,0x8000,0x0,0x0,0x6000000,0x0,0x0,0x20080000,0x20080000,0x20000,0xc0000,0x20080000,};
    }
    private static void jj_la1_init_1() {
       jj_la1_1 = new int[] {0x0,0x0,0x0,0x0,0x0,0x2000,0x0,0x2000,0x0,0x18,0x4,0x7e0,0x18,0x0,0x2000,0x2000,0x2800,0x2800,0x0,0x0,0x2800,};
