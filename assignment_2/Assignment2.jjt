@@ -8,8 +8,8 @@ import java.util.*;
 import java.io.*;
 
 public class SLPParser {
-    //public static SymbolTable ST = new SymbolTable();
-    public static TestTable ST = new TestTable();
+    //public static TestTable ST = new TestTable();
+    public static SymbolTable ST = new SymbolTable();
     public static void main(String args[]) throws ParseException, FileNotFoundException {
         if (args.length < 1) {
             System.out.println("Please supply a source file to compile");
@@ -18,9 +18,6 @@ public class SLPParser {
         SLPParser parser = new SLPParser(new FileInputStream(args[0]));
         SimpleNode root = parser.Prog();
         root.dump("");
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>");
-        ST.print();
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>");
         TypeCheckVisitor tc = new TypeCheckVisitor();
         root.jjtAccept(tc, ST);
         // System.out.println(ST.check("x"));
@@ -157,8 +154,7 @@ void var_decl() #void : { Token t; String name; }
         {
             jjtThis.value = t.image;
             System.out.println(name + " is added to the SymbolTable");
-            //ST.insert(String.valueOf(t.image), String.valueOf(name)); 
-            ST.insert(name);
+            ST.insert(String.valueOf(t.image), String.valueOf(name)); 
         } #VAR(1)
 }
 
@@ -168,8 +164,7 @@ void const_decl() #void : { Token t; String name; }
         {
             jjtThis.value = t.image;
             System.out.println(name + " is added to the SymbolTable");
-            //ST.insert(String.valueOf(t.image), String.valueOf(name)); 
-            ST.insert(name);
+            ST.insert(String.valueOf(t.image), String.valueOf(name)); 
         } #CONST(1)
 }
 
@@ -199,8 +194,8 @@ void param() : {Token t; String name;}
     name = id() <COLON> t = <TYPE>
         {
             jjtThis.value = t.image;
-            //ST.insert(t.image, name); 
-            ST.insert(name);
+            ST.insert(t.image, name); 
+            //ST.insert(name);
         } #VAR(1)
 }
 

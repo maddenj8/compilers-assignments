@@ -8,11 +8,9 @@ public class TestTable {
     public boolean check(String var_name) {
         int count = 0;
         for (String var : table) {
-            System.out.println(">>>>>> " + var_name);
             if (var.equals(var_name))
                 count++;
         }
-        System.out.println(count);
         return count > 1;
     }
     public static void main(String [] args) {

@@ -28,12 +28,11 @@ public class TypeCheckVisitor implements SLPParserVisitor {
         return (node.jjtGetChild(0).jjtAccept(this, data));
     }
     public Object visit(ASTVAR node, Object data) {
-        System.out.println(node);
+        //System.out.println(node);
         node.jjtGetChild(0).jjtAccept(this, data);
         return DataType.Declaration;
     }
     public Object visit(ASTCONST node, Object data) {
-        System.out.println(node);
         node.jjtGetChild(0).jjtAccept(this, data);
         return DataType.Declaration;    
     }
@@ -54,9 +53,8 @@ public class TypeCheckVisitor implements SLPParserVisitor {
     public Object visit(ASTbin_op node, Object data) {return null;}
     public Object visit(ASTfragment node, Object data) {return null;}
     public Object visit(ASTid node, Object data) {
-        // SymbolTable ST = (SymbolTable) data;
-        TestTable ST = (TestTable) data;
-        // System.out.println(ST.check(String.valueOf(node.value)));
+        SymbolTable ST = (SymbolTable) data;
+        System.out.println(node.value);
         System.out.println(ST.check(String.valueOf(node.value)));
         return node.value;
     }

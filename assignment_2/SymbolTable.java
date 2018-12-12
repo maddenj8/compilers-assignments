@@ -2,16 +2,14 @@ import java.util.*;
 
 public class SymbolTable {
     Stack<String> stack = new Stack<String>();
-    Hashtable<String, String> table = new Hashtable<String, String>();
+    Map<String, String> table = new Map<String, String>(); // continue with this idea later.
 
     public SymbolTable() {
         stack.push("$");
     }
     public void insert(String type, String varName) {
-        if (!check(varName)) {
-            table.put(type, varName); 
-            stack.push(type + " " + varName);
-        }
+        table.put(type, varName); 
+        stack.push(type + " " + varName);
     }
     public String get(String varName) {
         for (Object o : table.entrySet()) {
