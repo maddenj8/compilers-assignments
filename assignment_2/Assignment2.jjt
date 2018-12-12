@@ -8,7 +8,8 @@ import java.util.*;
 import java.io.*;
 
 public class SLPParser {
-    public static SymbolTable ST = new SymbolTable();
+    //public static SymbolTable ST = new SymbolTable();
+    public static TestTable ST = new TestTable();
     public static void main(String args[]) throws ParseException, FileNotFoundException {
         if (args.length < 1) {
             System.out.println("Please supply a source file to compile");
@@ -17,6 +18,9 @@ public class SLPParser {
         SLPParser parser = new SLPParser(new FileInputStream(args[0]));
         SimpleNode root = parser.Prog();
         root.dump("");
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>");
+        ST.print();
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>");
         TypeCheckVisitor tc = new TypeCheckVisitor();
         root.jjtAccept(tc, ST);
         // System.out.println(ST.check("x"));
@@ -151,9 +155,10 @@ void var_decl() #void : { Token t; String name; }
 {
     <VARIABLE> name = id() <COLON> t = <TYPE>
         {
-            System.out.println(ST.check(name));
             jjtThis.value = t.image;
-            ST.insert(String.valueOf(t.image), String.valueOf(name)); 
+            System.out.println(name + " is added to the SymbolTable");
+            //ST.insert(String.valueOf(t.image), String.valueOf(name)); 
+            ST.insert(name);
         } #VAR(1)
 }
 
@@ -162,7 +167,9 @@ void const_decl() #void : { Token t; String name; }
     <CONSTANT> name = id() <COLON> t = <TYPE>
         {
             jjtThis.value = t.image;
-            ST.insert(String.valueOf(t.image), String.valueOf(name)); 
+            System.out.println(name + " is added to the SymbolTable");
+            //ST.insert(String.valueOf(t.image), String.valueOf(name)); 
+            ST.insert(name);
         } #CONST(1)
 }
 
@@ -174,9 +181,7 @@ void func_list() #void : {}
 
 void func() : {}
 {
-    { ST.newScope(); }
         <TYPE> <ID> <LBR> (param_list())* <RBR> <IS> (decl_list())* (statement_block())*
-    { ST.endScope(); }
 }
 
 void param_list() : {}
@@ -194,7 +199,8 @@ void param() : {Token t; String name;}
     name = id() <COLON> t = <TYPE>
         {
             jjtThis.value = t.image;
-            ST.insert(t.image, name); 
+            //ST.insert(t.image, name); 
+            ST.insert(name);
         } #VAR(1)
 }
 

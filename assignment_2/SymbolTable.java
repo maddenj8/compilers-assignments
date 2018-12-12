@@ -21,7 +21,13 @@ public class SymbolTable {
         return null;
     }
     public Boolean check(String varName) {
-        return table.contains(varName);
+        int count = 0;
+        for (Object o : table.entrySet()) {
+            Map.Entry entry = (Map.Entry) o;
+            if (entry.getValue().equals(varName))
+                count++;
+        }
+        return count > 1;
     }
     public void newScope() {
         table.clear();
@@ -36,7 +42,7 @@ public class SymbolTable {
     }
     public void endScope() {
         /*
-         *Get rid of everything in the current scope
+         * Get rid of everything in the current scope
          * take the top item off the stack to begin.
          * Clear the table of the current scope to be replaced later
          */

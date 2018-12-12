@@ -6,6 +6,7 @@
  * you just did wrong during the prog execution. So don't worry about the type checker
  * until you are finished with the Prog() 
  **/
+import java.util.*;
 
 public class TypeCheckVisitor implements SLPParserVisitor {
     public Object visit(SimpleNode node, Object data) {
@@ -16,9 +17,6 @@ public class TypeCheckVisitor implements SLPParserVisitor {
         return DataType.Program;
     }
     public Object visit(ASTcode node, Object data) {
-        // if ((DataType) node.jjtGetChild(0).jjtAccept(this, data) == DataType.TypeUnknown) {
-        //     System.out.println("Type Error");
-        // }
         return (node.jjtGetChild(0).jjtAccept(this, data));
     }
     public Object visit(ASTdecl_list node, Object data) {
@@ -56,15 +54,10 @@ public class TypeCheckVisitor implements SLPParserVisitor {
     public Object visit(ASTbin_op node, Object data) {return null;}
     public Object visit(ASTfragment node, Object data) {return null;}
     public Object visit(ASTid node, Object data) {
-        SymbolTable ST = (SymbolTable) data;
-        System.out.println("#########################");
-        ST.print();
-        System.out.println("#########################");
-        if (ST.check(String.valueOf(node.value))) {
-            // variable has already been defined
-            System.out.println("Type Error: " + node.value + " has already been defined");
-            return null;
-        }
+        // SymbolTable ST = (SymbolTable) data;
+        TestTable ST = (TestTable) data;
+        // System.out.println(ST.check(String.valueOf(node.value)));
+        System.out.println(ST.check(String.valueOf(node.value)));
         return node.value;
     }
 }

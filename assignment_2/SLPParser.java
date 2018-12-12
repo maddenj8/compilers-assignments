@@ -3,7 +3,8 @@ import java.util.*;
 import java.io.*;
 
 public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPParserConstants {/*@bgen(jjtree)*/
-  protected static JJTSLPParserState jjtree = new JJTSLPParserState();public static SymbolTable ST = new SymbolTable();
+  protected static JJTSLPParserState jjtree = new JJTSLPParserState();//public static SymbolTable ST = new SymbolTable();
+    public static TestTable ST = new TestTable();
     public static void main(String args[]) throws ParseException, FileNotFoundException {
         if (args.length < 1) {
             System.out.println("Please supply a source file to compile");
@@ -12,6 +13,9 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
         SLPParser parser = new SLPParser(new FileInputStream(args[0]));
         SimpleNode root = parser.Prog();
         root.dump("");
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>");
+        ST.print();
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>");
         TypeCheckVisitor tc = new TypeCheckVisitor();
         root.jjtAccept(tc, ST);
         // System.out.println(ST.check("x"));
@@ -201,9 +205,10 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
     try {
           jjtree.closeNodeScope(jjtn001,  1);
           jjtc001 = false;
-            System.out.println(ST.check(name));
             jjtn001.value = t.image;
-            ST.insert(String.valueOf(t.image), String.valueOf(name));
+            System.out.println(name + " is added to the SymbolTable");
+            //ST.insert(String.valueOf(t.image), String.valueOf(name)); 
+            ST.insert(name);
     } finally {
           if (jjtc001) {
             jjtree.closeNodeScope(jjtn001,  1);
@@ -224,7 +229,9 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
           jjtree.closeNodeScope(jjtn001,  1);
           jjtc001 = false;
             jjtn001.value = t.image;
-            ST.insert(String.valueOf(t.image), String.valueOf(name));
+            System.out.println(name + " is added to the SymbolTable");
+            //ST.insert(String.valueOf(t.image), String.valueOf(name)); 
+            ST.insert(name);
     } finally {
           if (jjtc001) {
             jjtree.closeNodeScope(jjtn001,  1);
@@ -251,7 +258,6 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
     try {
-      ST.newScope();
       jj_consume_token(TYPE);
       jj_consume_token(ID);
       jj_consume_token(LBR);
@@ -294,27 +300,24 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
         }
         statement_block();
       }
-      jjtree.closeNodeScope(jjtn000, true);
-      jjtc000 = false;
-      ST.endScope();
     } catch (Throwable jjte000) {
-      if (jjtc000) {
-        jjtree.clearNodeScope(jjtn000);
-        jjtc000 = false;
-      } else {
-        jjtree.popNode();
-      }
-      if (jjte000 instanceof RuntimeException) {
-        {if (true) throw (RuntimeException)jjte000;}
-      }
-      if (jjte000 instanceof ParseException) {
-        {if (true) throw (ParseException)jjte000;}
-      }
-      {if (true) throw (Error)jjte000;}
+          if (jjtc000) {
+            jjtree.clearNodeScope(jjtn000);
+            jjtc000 = false;
+          } else {
+            jjtree.popNode();
+          }
+          if (jjte000 instanceof RuntimeException) {
+            {if (true) throw (RuntimeException)jjte000;}
+          }
+          if (jjte000 instanceof ParseException) {
+            {if (true) throw (ParseException)jjte000;}
+          }
+          {if (true) throw (Error)jjte000;}
     } finally {
-      if (jjtc000) {
-        jjtree.closeNodeScope(jjtn000, true);
-      }
+          if (jjtc000) {
+            jjtree.closeNodeScope(jjtn000, true);
+          }
     }
   }
 
@@ -399,7 +402,8 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
           jjtree.closeNodeScope(jjtn001,  1);
           jjtc001 = false;
             jjtn001.value = t.image;
-            ST.insert(t.image, name);
+            //ST.insert(t.image, name); 
+            ST.insert(name);
       } finally {
           if (jjtc001) {
             jjtree.closeNodeScope(jjtn001,  1);
@@ -948,6 +952,22 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
     finally { jj_save(2, xla); }
   }
 
+  static private boolean jj_3R_11() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(18)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(19)) return true;
+    }
+    return false;
+  }
+
+  static private boolean jj_3R_13() {
+    if (jj_scan_token(MINUS_SIGN)) return true;
+    if (jj_3R_9()) return true;
+    return false;
+  }
+
   static private boolean jj_3_2() {
     if (jj_3R_9()) return true;
     if (jj_scan_token(LBR)) return true;
@@ -990,22 +1010,6 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
   static private boolean jj_3_1() {
     if (jj_3R_9()) return true;
     if (jj_scan_token(ASSIGN)) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_11() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_scan_token(18)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(19)) return true;
-    }
-    return false;
-  }
-
-  static private boolean jj_3R_13() {
-    if (jj_scan_token(MINUS_SIGN)) return true;
-    if (jj_3R_9()) return true;
     return false;
   }
 
