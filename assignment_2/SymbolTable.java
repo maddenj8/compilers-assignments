@@ -1,31 +1,27 @@
+/*
+ * so I solved the initial problem but now there is the problem that if there is a duplicate added to the
+ * symbol table I won't be able to see if because the previous value is just overwritten and not added. This
+ * means I can't just simply count the occurances to see if there is duplicates. Sort this out next.
+ */
+
 import java.util.*;
 
 public class SymbolTable {
     Stack<String> stack = new Stack<String>();
-    Map<String, String> table = new Map<String, String>(); // continue with this idea later.
+    HashMap<String, String> table = new HashMap<String, String>();
 
     public SymbolTable() {
         stack.push("$");
     }
-    public void insert(String type, String varName) {
-        table.put(type, varName); 
-        stack.push(type + " " + varName);
+    public void insert(String varName, String type) {
+        table.put(varName, type); 
+        stack.push(varName + " " + type);
     }
     public String get(String varName) {
-        for (Object o : table.entrySet()) {
-            Map.Entry entry = (Map.Entry) o;
-            if (entry.getValue().equals(varName)) {return entry.getKey().toString();}
-        }
-        return null;
+        return table.get(varName);
     }
     public Boolean check(String varName) {
-        int count = 0;
-        for (Object o : table.entrySet()) {
-            Map.Entry entry = (Map.Entry) o;
-            if (entry.getValue().equals(varName))
-                count++;
-        }
-        return count > 1;
+        return get(varName) != null;
     }
     public void newScope() {
         table.clear();
@@ -35,7 +31,7 @@ public class SymbolTable {
     public void print() {
         for (Object o:table.entrySet()) {
             Map.Entry entry = (Map.Entry) o;
-            System.out.println(entry.getValue());
+            System.out.println(entry.getKey());
         }
     }
     public void endScope() {
@@ -68,22 +64,23 @@ public class SymbolTable {
     public static void main(String [] args) {
         try {
             SymbolTable symbolTable = new SymbolTable();
-            symbolTable.insert("int", "a");
-            symbolTable.insert("String", "i");
-            // symbolTable.insert("String", "a"); // should throw an error
+            symbolTable.insert("a", "int");
+            symbolTable.insert("b", "String");
+            symbolTable.insert("i", "String");
             System.out.println(symbolTable.check("i")); // true
             symbolTable.newScope();
             System.out.println("NEW SCOPE STARTED");
             System.out.println(symbolTable.check("a")); // false
             symbolTable.insert("int", "a");
             System.out.println(symbolTable.check("i")); // false
-            System.out.println(symbolTable.check("a")); // true
             symbolTable.endScope();
             System.out.println("END SCOPE");
             System.out.println(symbolTable.check("i")); // true
             System.out.println(symbolTable.check("a")); // true
             System.out.println(symbolTable.get("a")); // int
-            System.out.println(symbolTable.get("b")); // null
+            System.out.println(symbolTable.get("b")); // String
+            System.out.println(">>>>>>>>>>>>>>>>>>>>>>");
+            symbolTable.print();
         }
         catch (Exception e) {e.printStackTrace();}
     }

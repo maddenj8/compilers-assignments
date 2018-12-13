@@ -3,8 +3,8 @@ import java.util.*;
 import java.io.*;
 
 public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPParserConstants {/*@bgen(jjtree)*/
-  protected static JJTSLPParserState jjtree = new JJTSLPParserState();//public static TestTable ST = new TestTable();
-    public static SymbolTable ST = new SymbolTable();
+  protected static JJTSLPParserState jjtree = new JJTSLPParserState();public static SymbolTable ST = new SymbolTable();
+    //public static SymbolTable ST = new SymbolTable();
     public static void main(String args[]) throws ParseException, FileNotFoundException {
         if (args.length < 1) {
             System.out.println("Please supply a source file to compile");
@@ -204,7 +204,7 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
           jjtc001 = false;
             jjtn001.value = t.image;
             System.out.println(name + " is added to the SymbolTable");
-            ST.insert(String.valueOf(t.image), String.valueOf(name));
+            ST.insert(name, t.image);
             //ST.insert(name);
 
     } finally {
@@ -228,7 +228,7 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
           jjtc001 = false;
             jjtn001.value = t.image;
             System.out.println(name + " is added to the SymbolTable");
-            ST.insert(String.valueOf(t.image), String.valueOf(name));
+            ST.insert(name, t.image);
             //ST.insert(name);
 
     } finally {
@@ -401,7 +401,7 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
           jjtree.closeNodeScope(jjtn001,  1);
           jjtc001 = false;
             jjtn001.value = t.image;
-            ST.insert(t.image, name);
+            ST.insert(name, t.image);
             //ST.insert(name);
 
       } finally {
