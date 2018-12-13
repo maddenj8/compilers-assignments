@@ -2,6 +2,7 @@
  * so I solved the initial problem but now there is the problem that if there is a duplicate added to the
  * symbol table I won't be able to see if because the previous value is just overwritten and not added. This
  * means I can't just simply count the occurances to see if there is duplicates. Sort this out next.
+ * CHECK THE LENGTH OF THE ARRAY THAT IS THE VALUE OF THE VARNAME KEY!!!
  */
 
 import java.util.*;
