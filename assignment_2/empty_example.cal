@@ -5,3 +5,8 @@ variable y:boolean;
 constant a:integer;
 constant b:boolean;
 variable i:integer;
+
+main
+begin
+    x(something, here, i);
+end

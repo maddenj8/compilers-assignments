@@ -25,5 +25,6 @@ public interface SLPParserVisitor
   public Object visit(ASTbin_op node, Object data);
   public Object visit(ASTfragment node, Object data);
   public Object visit(ASTid node, Object data);
+  public Object visit(ASTreturn_statement node, Object data);
 }
-/* JavaCC - OriginalChecksum=f319d29f061eb0cf557caa1be64ede49 (do not edit this line) */
+/* JavaCC - OriginalChecksum=5340fdb3608f4b6cbcc6ce82ee4fd307 (do not edit this line) */

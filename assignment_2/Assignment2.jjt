@@ -126,14 +126,9 @@ SimpleNode Prog() #PROGRAM : {}
 
 void code() #code : {}
 {
-    (block() [code()])
-}
-
-void block() #void : {}
-{
-    decl_list()
-    | func_list()
-    | main_statement()
+    (decl_list())*
+    (func_list())*
+    main_statement()
 }
 
 void decl_list() #void : {}
@@ -173,7 +168,9 @@ void const_decl() #void : { Token t; String name; }
 /** FUNCTION **/
 void func_list() #void : {}
 {
+    {ST.newScope();}
     (func() [func_list()])
+    {ST.endScope();}
 }
 
 void func() : {}
@@ -186,9 +183,9 @@ void param_list() : {}
     (nemp_param_list())
 }
 
-void nemp_param_list() : {}
+void nemp_param_list() #void : {}
 {   
-    param() [<COMMA> nemp_param_list()]
+    param() [<COMMA> nemp_param_list() #nemp_param_list(2)]
 }
 
 void param() : {Token t; String name;} 
@@ -233,23 +230,25 @@ void log_ops() : {}
 /** MAIN STATEMENT **/
 void main_statement() : {} 
 {
+    {ST.newScope();}
     <MAIN> <BEGIN> (decl_list())* (statement_block())* <END>
+    {ST.endScope();}
 }
 
-void statement_block() : {}
+void statement_block() #void : {}
 {
-    (statement() [statement_block()])
+    (statement() [statement_block() #statement_block(2)])
 }
 
 void statement() : {}
 {
     LOOKAHEAD(2) (id() <ASSIGN> expr() <SEMIC>)
     | LOOKAHEAD(2) id() <LBR> (expr())* <RBR> <SEMIC>
-    //| <BEGIN> (statement_block())* return_statement() <END>
-    //| <IF> condition() <BEGIN> (statement_block())* <END>
-    //| <ELSE> <BEGIN> (statement_block()) * <END>
-    //| <WHILE> condition() <BEGIN> (statement_block())* <END>
-    //| <SKIP_WORD> <SEMIC>
+    | <BEGIN> (statement_block())* return_statement() <END>
+    | <IF> condition() <BEGIN> (statement_block())* <END>
+    | <ELSE> <BEGIN> (statement_block()) * <END>
+    | <WHILE> condition() <BEGIN> (statement_block())* <END>
+    | <SKIP_WORD> <SEMIC>
 }
 
 void expr() : {}
@@ -265,9 +264,9 @@ void arg_list() : {}
     nemp_arg_list()
 }
 
-void nemp_arg_list() : {}
+void nemp_arg_list() #void : {}
 {
-    (id() (<COMMA> nemp_arg_list())*)
+    (id() [<COMMA> nemp_arg_list() #nemp_arg_list(2)])
 }
 
 void bin_op() : {}
@@ -288,4 +287,9 @@ void fragment() : {}
 String id()  : { Token t; }
 {
     t = <ID> {jjtThis.value = t.image; return t.image;}
+}
+
+void return_statement() : {} 
+{ 
+    <RETURN> <LBR> (expr())* <RBR> <SEMIC>
 }

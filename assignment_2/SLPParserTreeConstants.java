@@ -25,6 +25,7 @@ public interface SLPParserTreeConstants
   public int JJTBIN_OP = 21;
   public int JJTFRAGMENT = 22;
   public int JJTID = 23;
+  public int JJTRETURN_STATEMENT = 24;
 
 
   public String[] jjtNodeName = {
@@ -52,6 +53,7 @@ public interface SLPParserTreeConstants
     "bin_op",
     "fragment",
     "id",
+    "return_statement",
   };
 }
-/* JavaCC - OriginalChecksum=c0071060a67756be1e092acf70fb2df0 (do not edit this line) */
+/* JavaCC - OriginalChecksum=341b3752d8487a627945eeb82c946ae8 (do not edit this line) */
