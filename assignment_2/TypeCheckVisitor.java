@@ -54,8 +54,10 @@ public class TypeCheckVisitor implements SLPParserVisitor {
     public Object visit(ASTfragment node, Object data) {return null;}
     public Object visit(ASTid node, Object data) {
         SymbolTable ST = (SymbolTable) data;
-        System.out.println(node.value);
-        System.out.println(ST.check(String.valueOf(node.value)));
+        if (ST.get(String.valueOf(node.value)).size() > 1) {
+            System.out.println("Type Error: " + node.value + " has already been defined");
+            return null;
+        }
         return node.value;
     }
 }

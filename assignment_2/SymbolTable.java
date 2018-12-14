@@ -8,81 +8,77 @@
 import java.util.*;
 
 public class SymbolTable {
-    Stack<String> stack = new Stack<String>();
-    HashMap<String, String> table = new HashMap<String, String>();
+    Stack<HashMap<String, ArrayList<String>>> stack = new Stack<HashMap<String, ArrayList<String>>>();
+    HashMap<String, ArrayList<String>> scope = new HashMap<String, ArrayList<String>>();
+    HashMap<String, ArrayList<String>> globalScope = new HashMap<String, ArrayList<String>>();
+    Boolean gscope = true; // keep track of whether to insert into global or current scope
 
-    public SymbolTable() {
-        stack.push("$");
+    public SymbolTable () {
+        stack.push(new HashMap<String, ArrayList<String>>()); // empty scope to start the stack
     }
-    public void insert(String varName, String type) {
-        table.put(varName, type); 
-        stack.push(varName + " " + type);
+    public ArrayList<String> get(String varName) {
+        ArrayList<String> result = scope.get(varName);
+        if (result == null) 
+            result = globalScope.get(varName);
+        return result;
     }
-    public String get(String varName) {
-        return table.get(varName);
-    }
+
     public Boolean check(String varName) {
         return get(varName) != null;
     }
+
+    public void insert(String varName, String type) {
+        if (check(varName)) {
+            if (gscope)
+                globalScope.get(varName).add(type);
+            else {
+                scope.get(varName).add(type);        
+            }
+        }
+        else {
+            ArrayList<String> array = new ArrayList<String>();
+            array.add(type);
+            if (gscope)
+                globalScope.put(varName, array);
+            else
+                scope.put(varName, array);
+        }
+    }
+
     public void newScope() {
-        table.clear();
-        // start symbol for new scope
-        stack.push("$"); 
-    }
-    public void print() {
-        for (Object o:table.entrySet()) {
-            Map.Entry entry = (Map.Entry) o;
-            System.out.println(entry.getKey());
+        if (gscope) 
+            gscope = false; // don't need to do anything to scope as it should be empty at this point.
+        else {
+            stack.push(scope);
+            scope.clear();
         }
     }
+
     public void endScope() {
-        /*
-         * Get rid of everything in the current scope
-         * take the top item off the stack to begin.
-         * Clear the table of the current scope to be replaced later
-         */
-        table.clear();
-        String stackItem = stack.pop();
-        while(stackItem != "$") 
-            stackItem = stack.pop();
-        /*
-         * now we have to get the new current scope into the table
-         * make a copy of stack that can be destroyed
-         */
-        Stack<String> tmp = stack;
-        stackItem = tmp.pop();
-        while (stackItem != "$") {
-            String [] splitItems = stackItem.split(" ");
-            table.put(splitItems[0], splitItems[1]);
-            stackItem = tmp.pop();
-        }
-        /*
-         * now the stack has the proper scope from before the new scope was made
-         * and the table is populated with the scope from before the new scope was made.
-         */
+        scope = stack.pop(); // get old scope back
     }
 
     public static void main(String [] args) {
-        try {
-            SymbolTable symbolTable = new SymbolTable();
-            symbolTable.insert("a", "int");
-            symbolTable.insert("b", "String");
-            symbolTable.insert("i", "String");
-            System.out.println(symbolTable.check("i")); // true
-            symbolTable.newScope();
-            System.out.println("NEW SCOPE STARTED");
-            System.out.println(symbolTable.check("a")); // false
-            symbolTable.insert("int", "a");
-            System.out.println(symbolTable.check("i")); // false
-            symbolTable.endScope();
-            System.out.println("END SCOPE");
-            System.out.println(symbolTable.check("i")); // true
-            System.out.println(symbolTable.check("a")); // true
-            System.out.println(symbolTable.get("a")); // int
-            System.out.println(symbolTable.get("b")); // String
-            System.out.println(">>>>>>>>>>>>>>>>>>>>>>");
-            symbolTable.print();
-        }
-        catch (Exception e) {e.printStackTrace();}
+        SymbolTable ST = new SymbolTable();
+        ST.insert("a", "int");
+        ST.insert("b",  "String");
+        System.out.println(ST.check("a")); // true
+        System.out.println(ST.check("b")); // true
+        System.out.println(ST.check("x")); // false
+        ST.insert("a", "String");
+        System.out.println(ST.get("a")); // [int, String]   
+        ST.newScope();
+        System.out.println(ST.check("a")); // true
+        System.out.println(ST.check("b")); // true
+        System.out.println(ST.check("x")); // false
+        ST.insert("i", "int");
+        System.out.println(ST.scope.get("i"));
+        ST.endScope();
+        System.out.println(ST.scope.get("i"));
+        System.out.println(ST.check("a")); // true
+        System.out.println(ST.check("b")); // true
+        System.out.println(ST.check("x")); // false
+        System.out.println(ST.check("i")); // false
+        
     }
 }
