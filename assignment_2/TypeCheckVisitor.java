@@ -31,7 +31,15 @@ public class TypeCheckVisitor implements SLPParserVisitor {
     }
     public Object visit(ASTVAR node, Object data) {
         //System.out.println(node);
-        node.jjtGetChild(0).jjtAccept(this, data);
+        String idVal = node.jjtGetChild(0).jjtAccept(this, data).toString();
+        SymbolTable ST = (SymbolTable) data;
+        ArrayList<String> types = ST.get(String.valueOf(idVal));
+        if (types != null) {
+            if (types.size() > 1) {
+                System.out.println("Type Error: " + idVal + " has already been defined");
+                return null;
+            }
+        }
         return DataType.Declaration;
     }
     public Object visit(ASTCONST node, Object data) {
@@ -55,17 +63,14 @@ public class TypeCheckVisitor implements SLPParserVisitor {
     public Object visit(ASTcomp_ops node, Object data) {return null;}
     public Object visit(ASTlog_ops node, Object data) {return null;}
     public Object visit(ASTmain_statement node, Object data) {
-        System.out.println(node + " " + node.jjtGetChild(0));
         return node.jjtGetChild(0).jjtAccept(this, data);
     }
     public Object visit(ASTstatement_block node, Object data) {
-        System.out.println(node + " " + node.jjtGetChild(0));
         node.jjtGetChild(0).jjtAccept(this, data);
         node.jjtGetChild(1).jjtAccept(this, data);
         return data;
     }
     public Object visit(ASTstatement node, Object data) {
-        System.out.println(node + " " + node.jjtGetChild(0));
         for (int i = 0; i < node.jjtGetNumChildren(); i++) {
             node.jjtGetChild(i).jjtAccept(this, data);
         }
@@ -73,13 +78,12 @@ public class TypeCheckVisitor implements SLPParserVisitor {
     }
     public Object visit(ASTexpr node, Object data) {return node.jjtGetChild(0).jjtAccept(this, data);}
     public Object visit(ASTarg_list node, Object data) {
-        System.out.println("############# " + node.jjtGetChild(0));
         return node.jjtGetChild(0).jjtAccept(this, data);
     }
     public Object visit(ASTnemp_arg_list node, Object data) {
-        System.out.println(">>>>>>>>> " + node.jjtGetChild(0));
-        System.out.println(">>>>>>>>> " + node.jjtGetChild(1));
-        node.jjtGetChild(0).jjtAccept(this, data);
+        SymbolTable ST = (SymbolTable) data; 
+        String idVal = node.jjtGetChild(0).jjtAccept(this, data).toString();
+        if (!(ST.check(idVal))) {System.out.println("Type Error: " + idVal + " was used before it was defined");}
         node.jjtGetChild(1).jjtAccept(this, data);
         return data;
     }
@@ -87,15 +91,17 @@ public class TypeCheckVisitor implements SLPParserVisitor {
     public Object visit(ASTfragment node, Object data) {return null;}
     public Object visit(ASTid node, Object data) {
         if (node.jjtGetNumChildren() > 0) {
-            System.out.println(node + " " + node.jjtGetChild(0));
             return node.jjtGetChild(0).jjtAccept(this, data);
         }
-        SymbolTable ST = (SymbolTable) data;
-        if (ST.get(String.valueOf(node.value)).size() > 1) {
-            System.out.println("Type Error: " + node.value + " has already been defined");
-            return null;
-        }
         return node.value;
+    }
+    public Object visit(ASTfunc_call node, Object data) { 
+        String funcName = node.jjtGetChild(0).jjtAccept(this, data).toString(); // id
+        SymbolTable ST = (SymbolTable) data;
+        if (!(ST.check(funcName))) {System.out.println("Type Error: Function " + funcName + " used before it was defined");}
+        else if (ST.get(funcName).get(0) != "function") {System.out.println("Type Error: " + funcName + " is not a function");}
+        node.jjtGetChild(1).jjtAccept(this, data); // expr
+        return data;
     }
     public Object visit(ASTreturn_statement node, Object data) {
         return null;

@@ -656,12 +656,43 @@ void statement() : {/*@bgen(jjtree) statement */
     try {
 /*@egen*/
     LOOKAHEAD(2) (id() <ASSIGN> expr() <SEMIC>)
-    | LOOKAHEAD(2) id() <LBR> (expr())* <RBR> <SEMIC>
+    | LOOKAHEAD(2) func_call()
     | <BEGIN> (statement_block())* return_statement() <END>
     | <IF> condition() <BEGIN> (statement_block())* <END>
     | <ELSE> <BEGIN> (statement_block()) * <END>
     | <WHILE> condition() <BEGIN> (statement_block())* <END>
     | <SKIP_WORD> <SEMIC>/*@bgen(jjtree)*/
+    } catch (Throwable jjte000) {
+      if (jjtc000) {
+        jjtree.clearNodeScope(jjtn000);
+        jjtc000 = false;
+      } else {
+        jjtree.popNode();
+      }
+      if (jjte000 instanceof RuntimeException) {
+        throw (RuntimeException)jjte000;
+      }
+      if (jjte000 instanceof ParseException) {
+        throw (ParseException)jjte000;
+      }
+      throw (Error)jjte000;
+    } finally {
+      if (jjtc000) {
+        jjtree.closeNodeScope(jjtn000, true);
+      }
+    }
+/*@egen*/
+}
+
+void func_call() : {/*@bgen(jjtree) func_call */
+                    ASTfunc_call jjtn000 = new ASTfunc_call(JJTFUNC_CALL);
+                    boolean jjtc000 = true;
+                    jjtree.openNodeScope(jjtn000);
+/*@egen*/String name;}
+{/*@bgen(jjtree) func_call */
+    try {
+/*@egen*/
+    name = id() <LBR> (expr())* <RBR> <SEMIC>/*@bgen(jjtree)*/
     } catch (Throwable jjte000) {
       if (jjtc000) {
         jjtree.clearNodeScope(jjtn000);
@@ -749,36 +780,39 @@ void arg_list() : {/*@bgen(jjtree) arg_list */
 /*@egen*/
 }
 
-void nemp_arg_list()       : {}
+void nemp_arg_list()       : {String name;}
 {
-    (id() [<COMMA>/*@bgen(jjtree) #nemp_arg_list( 2) */
-                   {
-                     ASTnemp_arg_list jjtn001 = new ASTnemp_arg_list(JJTNEMP_ARG_LIST);
-                     boolean jjtc001 = true;
-                     jjtree.openNodeScope(jjtn001);
-                   }
-                   try {
+    (name = id() [<COMMA>/*@bgen(jjtree) #nemp_arg_list( 2) */
+                          {
+                            ASTnemp_arg_list jjtn001 = new ASTnemp_arg_list(JJTNEMP_ARG_LIST);
+                            boolean jjtc001 = true;
+                            jjtree.openNodeScope(jjtn001);
+                          }
+                          try {
 /*@egen*/ nemp_arg_list()/*@bgen(jjtree)*/
-                   } catch (Throwable jjte001) {
-                     if (jjtc001) {
-                       jjtree.clearNodeScope(jjtn001);
-                       jjtc001 = false;
-                     } else {
-                       jjtree.popNode();
-                     }
-                     if (jjte001 instanceof RuntimeException) {
-                       throw (RuntimeException)jjte001;
-                     }
-                     if (jjte001 instanceof ParseException) {
-                       throw (ParseException)jjte001;
-                     }
-                     throw (Error)jjte001;
-                   } finally {
-                     if (jjtc001) {
-                       jjtree.closeNodeScope(jjtn001,  2);
-                     }
-                   }
+                          } catch (Throwable jjte001) {
+                            if (jjtc001) {
+                              jjtree.clearNodeScope(jjtn001);
+                              jjtc001 = false;
+                            } else {
+                              jjtree.popNode();
+                            }
+                            if (jjte001 instanceof RuntimeException) {
+                              throw (RuntimeException)jjte001;
+                            }
+                            if (jjte001 instanceof ParseException) {
+                              throw (ParseException)jjte001;
+                            }
+                            throw (Error)jjte001;
+                          } finally {
+                            if (jjtc001) {
+                              jjtree.closeNodeScope(jjtn001,  2);
+                            }
+                          }
 /*@egen*/                  ])
+    {
+        ST.insertArgs(name); 
+    }
 }
 
 void bin_op() : {/*@bgen(jjtree) bin_op */

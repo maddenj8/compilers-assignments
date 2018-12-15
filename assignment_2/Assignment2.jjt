@@ -243,12 +243,17 @@ void statement_block() #void : {}
 void statement() : {}
 {
     LOOKAHEAD(2) (id() <ASSIGN> expr() <SEMIC>)
-    | LOOKAHEAD(2) id() <LBR> (expr())* <RBR> <SEMIC>
+    | LOOKAHEAD(2) func_call()
     | <BEGIN> (statement_block())* return_statement() <END>
     | <IF> condition() <BEGIN> (statement_block())* <END>
     | <ELSE> <BEGIN> (statement_block()) * <END>
     | <WHILE> condition() <BEGIN> (statement_block())* <END>
     | <SKIP_WORD> <SEMIC>
+}
+
+void func_call() : {String name;}
+{
+    name = id() <LBR> (expr())* <RBR> <SEMIC>
 }
 
 void expr() : {}
@@ -264,9 +269,12 @@ void arg_list() : {}
     nemp_arg_list()
 }
 
-void nemp_arg_list() #void : {}
+void nemp_arg_list() #void : {String name;}
 {
-    (id() [<COMMA> nemp_arg_list() #nemp_arg_list(2)])
+    (name = id() [<COMMA> nemp_arg_list() #nemp_arg_list(2)])
+    {
+        ST.insertArgs(name); 
+    }
 }
 
 void bin_op() : {}

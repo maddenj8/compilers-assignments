@@ -28,6 +28,7 @@ public class SymbolTable {
     }
 
     public void insert(String varName, String type) {
+        System.out.println("varName " + varName + " type " + type);
         if (check(varName)) {
             if (gscope)
                 globalScope.get(varName).add(type);
@@ -45,6 +46,20 @@ public class SymbolTable {
         }
     }
 
+    public void insertArgs(String varName) { 
+        // make sure you check not to overwrite anything that is already defined (for the type checker to point out)
+        ArrayList var = new ArrayList<String>();
+        var.add("param");
+        scope.put(varName, var);
+    }
+
+    public void insertFunction(String funcName) {
+        // make sure you check not to overwrite anything that is already defined (for the type checker to point out)
+        ArrayList func = new ArrayList<String>();
+        func.add("function");
+        globalScope.put(funcName, func);
+    }
+
     public void newScope() {
         if (gscope) 
             gscope = false; // don't need to do anything to scope as it should be empty at this point.
@@ -56,6 +71,15 @@ public class SymbolTable {
 
     public void endScope() {
         scope = stack.pop(); // get old scope back
+    }
+
+    public void print() {
+        System.out.println(">>>>>>>>");
+        for (Object o : scope.entrySet()) {
+            Map.Entry entry = (Map.Entry) o;
+            System.out.println(entry.getValue());
+        }
+        System.out.println("<<<<<<<<");
     }
 
     public static void main(String [] args) {

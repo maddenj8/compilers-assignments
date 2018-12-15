@@ -9,4 +9,5 @@ variable i:integer;
 main
 begin
     x(something, here, i);
+    test_func(here, and, there);
 end
