@@ -55,6 +55,11 @@ public class SymbolTable {
 
     public void insertFunction(String funcName) {
         // make sure you check not to overwrite anything that is already defined (for the type checker to point out)
+        if (check(funcName)) {
+            get(funcName).add("function");
+            return;
+        }
+                
         ArrayList func = new ArrayList<String>();
         func.add("function");
         globalScope.put(funcName, func);

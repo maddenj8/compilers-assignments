@@ -117,16 +117,17 @@ public class TypeCheckVisitor implements SLPParserVisitor {
         try {
             idType = ST.get(idVal).get(0);
         } catch (Exception e) {return null;}
-        if (isNumeric(exprVal)) { // boolean id to integer value
-            if (idType != "integer") {
-                System.out.println("Type Error: " +  idType + " " + idVal + " cannot be assigned to integer " + exprVal);
+        if (idType.contains("boolean")) {
+            if (!(exprVal.equals("true") || exprVal.equals("false"))) {
+                System.out.println("Type Error: " + idType + " " + idVal + " cannot be assigned to integer " + exprVal);
                 return null;
             }
         }
-        else { // expr must be boolean at this point
-            if (idType != "boolean") { // boolean id to integer value
-                System.out.println("Type Error: " + idType + " " + idVal + " cannot be assigned to boolean " + exprVal);
-                return null;
+        else { // know it is integer id type here
+            if (!(isNumeric(exprVal))) {
+                if (!(exprVal.contains("+")) || !(exprVal.contains("-"))) { // not a bin_op either
+                    System.out.println("Type Error: " + idType + " " + idVal + " cannot be assigned to boolean " + exprVal);
+                }
             }
         }
         return data;
