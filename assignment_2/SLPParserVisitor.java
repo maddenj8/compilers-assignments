@@ -19,6 +19,7 @@ public interface SLPParserVisitor
   public Object visit(ASTmain_statement node, Object data);
   public Object visit(ASTstatement_block node, Object data);
   public Object visit(ASTstatement node, Object data);
+  public Object visit(ASTassign node, Object data);
   public Object visit(ASTfunc_call node, Object data);
   public Object visit(ASTexpr node, Object data);
   public Object visit(ASTarg_list node, Object data);
@@ -28,4 +29,4 @@ public interface SLPParserVisitor
   public Object visit(ASTid node, Object data);
   public Object visit(ASTreturn_statement node, Object data);
 }
-/* JavaCC - OriginalChecksum=c8675fbe67d3b920327f61a391bb6288 (do not edit this line) */
+/* JavaCC - OriginalChecksum=bd7eed07b21c3b0a3add8915c092740b (do not edit this line) */

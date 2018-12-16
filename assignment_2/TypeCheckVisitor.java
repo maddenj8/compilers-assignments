@@ -1,11 +1,3 @@
-/** 
- * so the way I think it works is that you add everything to the Symbol table and
- * do everything you want to do care free in the SLPParser class.
- * Once parser.Prog() is finished executing through the source code
- * you then call new TypeCheckVisitor that goes through and corrects everything
- * you just did wrong during the prog execution. So don't worry about the type checker
- * until you are finished with the Prog() 
- **/
 import java.util.*;
 
 public class TypeCheckVisitor implements SLPParserVisitor {
@@ -19,7 +11,6 @@ public class TypeCheckVisitor implements SLPParserVisitor {
     public Object visit(ASTcode node, Object data) {
         node.jjtGetChild(0).jjtAccept(this, data);
         return node.jjtGetChild(1).jjtAccept(this, data);
-        //node.jjtGetChild(2).jjtAccept(this, data);
     }
     public Object visit(ASTdecl_list node, Object data) {
         node.jjtGetChild(0).jjtAccept(this, data);
@@ -76,7 +67,9 @@ public class TypeCheckVisitor implements SLPParserVisitor {
         }
         return data;
     }
-    public Object visit(ASTexpr node, Object data) {return node.jjtGetChild(0).jjtAccept(this, data);}
+    public Object visit(ASTexpr node, Object data) {
+        return node.jjtGetChild(0).jjtAccept(this, data);
+    }
     public Object visit(ASTarg_list node, Object data) {
         return node.jjtGetChild(0).jjtAccept(this, data);
     }
@@ -84,11 +77,24 @@ public class TypeCheckVisitor implements SLPParserVisitor {
         SymbolTable ST = (SymbolTable) data; 
         String idVal = node.jjtGetChild(0).jjtAccept(this, data).toString();
         if (!(ST.check(idVal))) {System.out.println("Type Error: " + idVal + " was used before it was defined");}
-        node.jjtGetChild(1).jjtAccept(this, data);
+        String otherVal = node.jjtGetChild(1).jjtAccept(this, data).toString();
+        if (!(otherVal.contains("SymbolTable"))) {
+            if(!(ST.check(otherVal))) {System.out.println("Type Error: " + otherVal + " was used before it was defined");}
+        }
         return data;
     }
-    public Object visit(ASTbin_op node, Object data) {return null;}
-    public Object visit(ASTfragment node, Object data) {return null;}
+    // GET A VALUE FOR FRAGMENT
+    public Object visit(ASTfragment node, Object data) {
+        String idVal = (node.jjtGetNumChildren() >= 1) ? node.jjtGetChild(0).jjtAccept(this, data).toString() : null;
+        String tokVal = node.value.toString();
+        if (idVal != null)
+            if (tokVal != null)
+                return tokVal + idVal; // -x
+            else 
+                return idVal; // x
+        else 
+            return tokVal; // true
+    }
     public Object visit(ASTid node, Object data) {
         if (node.jjtGetNumChildren() > 0) {
             return node.jjtGetChild(0).jjtAccept(this, data);
@@ -103,6 +109,44 @@ public class TypeCheckVisitor implements SLPParserVisitor {
         node.jjtGetChild(1).jjtAccept(this, data); // expr
         return data;
     }
+    public Object visit(ASTassign node, Object data) {
+        SymbolTable ST = (SymbolTable) data;
+        String idVal = node.jjtGetChild(0).jjtAccept(this, data).toString();
+        String idType;
+        String exprVal = node.jjtGetChild(1).jjtAccept(this, data).toString();
+        try {
+            idType = ST.get(idVal).get(0);
+        } catch (Exception e) {return null;}
+        if (isNumeric(exprVal)) { // boolean id to integer value
+            if (idType != "integer") {
+                System.out.println("Type Error: " +  idType + " " + idVal + " cannot be assigned to integer " + exprVal);
+                return null;
+            }
+        }
+        else { // expr must be boolean at this point
+            if (idType != "boolean") { // boolean id to integer value
+                System.out.println("Type Error: " + idType + " " + idVal + " cannot be assigned to boolean " + exprVal);
+                return null;
+            }
+        }
+        return data;
+    }
+    private Boolean isNumeric(String num) {
+        try {
+            int d = Integer.parseInt(num);
+        } catch(Exception e) {return false;}
+        return true;
+    }
+    public Object visit(ASTbin_op node, Object data) {
+        String leftSideVal = node.jjtGetChild(0).jjtAccept(this, data).toString();
+        String leftSideType = node.jjtGetChild(0).toString();
+        System.out.println(leftSideType + " " + leftSideVal);
+        return null;
+    }
+
+    // public Object visit(ASTlog_op node, Object data) {
+        // return null;
+    // }
     public Object visit(ASTreturn_statement node, Object data) {
         return null;
     }

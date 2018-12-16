@@ -655,13 +655,44 @@ void statement() : {/*@bgen(jjtree) statement */
 {/*@bgen(jjtree) statement */
     try {
 /*@egen*/
-    LOOKAHEAD(2) (id() <ASSIGN> expr() <SEMIC>)
+    LOOKAHEAD(2) assign()
     | LOOKAHEAD(2) func_call()
     | <BEGIN> (statement_block())* return_statement() <END>
     | <IF> condition() <BEGIN> (statement_block())* <END>
     | <ELSE> <BEGIN> (statement_block()) * <END>
     | <WHILE> condition() <BEGIN> (statement_block())* <END>
     | <SKIP_WORD> <SEMIC>/*@bgen(jjtree)*/
+    } catch (Throwable jjte000) {
+      if (jjtc000) {
+        jjtree.clearNodeScope(jjtn000);
+        jjtc000 = false;
+      } else {
+        jjtree.popNode();
+      }
+      if (jjte000 instanceof RuntimeException) {
+        throw (RuntimeException)jjte000;
+      }
+      if (jjte000 instanceof ParseException) {
+        throw (ParseException)jjte000;
+      }
+      throw (Error)jjte000;
+    } finally {
+      if (jjtc000) {
+        jjtree.closeNodeScope(jjtn000, true);
+      }
+    }
+/*@egen*/
+}
+
+void assign() : {/*@bgen(jjtree) assign */
+                 ASTassign jjtn000 = new ASTassign(JJTASSIGN);
+                 boolean jjtc000 = true;
+                 jjtree.openNodeScope(jjtn000);
+/*@egen*/String name;}
+{/*@bgen(jjtree) assign */
+    try {
+/*@egen*/
+    (name = id() <ASSIGN> expr() <SEMIC>)/*@bgen(jjtree)*/
     } catch (Throwable jjte000) {
       if (jjtc000) {
         jjtree.clearNodeScope(jjtn000);
@@ -833,18 +864,33 @@ void bin_op() : {/*@bgen(jjtree) bin_op */
 /*@egen*/
 }
 
-void fragment() : {/*@bgen(jjtree) fragment */
-  ASTfragment jjtn000 = new ASTfragment(JJTFRAGMENT);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-/*@egen*/}
+String fragment() : {/*@bgen(jjtree) fragment */
+                      ASTfragment jjtn000 = new ASTfragment(JJTFRAGMENT);
+                      boolean jjtc000 = true;
+                      jjtree.openNodeScope(jjtn000);
+/*@egen*/ String name; Token t; }
 {/*@bgen(jjtree) fragment */
     try {
 /*@egen*/
-    id()
-    | <MINUS_SIGN> id()
-    | <NUM>
-    | <BOOL>/*@bgen(jjtree)*/
+    name = id()
+    | t = <MINUS_SIGN> name = id()/*@bgen(jjtree)*/
+                                   {
+                                     jjtree.closeNodeScope(jjtn000, true);
+                                     jjtc000 = false;
+                                   }
+/*@egen*/ {jjtn000.value = t.image; return t.image;}
+    | t = <NUM>/*@bgen(jjtree)*/
+                {
+                  jjtree.closeNodeScope(jjtn000, true);
+                  jjtc000 = false;
+                }
+/*@egen*/ {jjtn000.value = t.image; return t.image;}
+    | t = <BOOL>/*@bgen(jjtree)*/
+                 {
+                   jjtree.closeNodeScope(jjtn000, true);
+                   jjtc000 = false;
+                 }
+/*@egen*/ {jjtn000.value = t.image; return t.image;}/*@bgen(jjtree)*/
     } catch (Throwable jjte000) {
       if (jjtc000) {
         jjtree.clearNodeScope(jjtn000);

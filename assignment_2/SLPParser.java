@@ -690,10 +690,7 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
   jjtree.openNodeScope(jjtn000);
     try {
       if (jj_2_1(2)) {
-        id();
-        jj_consume_token(ASSIGN);
-        expr();
-        jj_consume_token(SEMIC);
+        assign();
       } else if (jj_2_2(2)) {
         func_call();
       } else {
@@ -798,6 +795,37 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
           throw new ParseException();
         }
       }
+    } catch (Throwable jjte000) {
+      if (jjtc000) {
+        jjtree.clearNodeScope(jjtn000);
+        jjtc000 = false;
+      } else {
+        jjtree.popNode();
+      }
+      if (jjte000 instanceof RuntimeException) {
+        {if (true) throw (RuntimeException)jjte000;}
+      }
+      if (jjte000 instanceof ParseException) {
+        {if (true) throw (ParseException)jjte000;}
+      }
+      {if (true) throw (Error)jjte000;}
+    } finally {
+      if (jjtc000) {
+        jjtree.closeNodeScope(jjtn000, true);
+      }
+    }
+  }
+
+  static final public void assign() throws ParseException {
+                 /*@bgen(jjtree) assign */
+                 ASTassign jjtn000 = new ASTassign(JJTASSIGN);
+                 boolean jjtc000 = true;
+                 jjtree.openNodeScope(jjtn000);String name;
+    try {
+      name = id();
+      jj_consume_token(ASSIGN);
+      expr();
+      jj_consume_token(SEMIC);
     } catch (Throwable jjte000) {
       if (jjtc000) {
         jjtree.clearNodeScope(jjtn000);
@@ -1003,25 +1031,34 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
     }
   }
 
-  static final public void fragment() throws ParseException {
-                   /*@bgen(jjtree) fragment */
-  ASTfragment jjtn000 = new ASTfragment(JJTFRAGMENT);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
+  static final public String fragment() throws ParseException {
+                     /*@bgen(jjtree) fragment */
+                      ASTfragment jjtn000 = new ASTfragment(JJTFRAGMENT);
+                      boolean jjtc000 = true;
+                      jjtree.openNodeScope(jjtn000);String name; Token t;
     try {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case ID:
-        id();
+        name = id();
         break;
       case MINUS_SIGN:
-        jj_consume_token(MINUS_SIGN);
-        id();
+        t = jj_consume_token(MINUS_SIGN);
+        name = id();
+                                     jjtree.closeNodeScope(jjtn000, true);
+                                     jjtc000 = false;
+                                    jjtn000.value = t.image; {if (true) return t.image;}
         break;
       case NUM:
-        jj_consume_token(NUM);
+        t = jj_consume_token(NUM);
+                  jjtree.closeNodeScope(jjtn000, true);
+                  jjtc000 = false;
+                 jjtn000.value = t.image; {if (true) return t.image;}
         break;
       case BOOL:
-        jj_consume_token(BOOL);
+        t = jj_consume_token(BOOL);
+                   jjtree.closeNodeScope(jjtn000, true);
+                   jjtc000 = false;
+                  jjtn000.value = t.image; {if (true) return t.image;}
         break;
       default:
         jj_la1[25] = jj_gen;
@@ -1047,6 +1084,7 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
         jjtree.closeNodeScope(jjtn000, true);
       }
     }
+    throw new Error("Missing return statement in function");
   }
 
 /** SIMPLE TOKENS **/
@@ -1136,34 +1174,27 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
   }
 
   static private boolean jj_3R_20() {
-    if (jj_scan_token(MINUS_SIGN)) return true;
-    if (jj_3R_15()) return true;
-    return false;
-  }
-
-  static private boolean jj_3_1() {
-    if (jj_3R_15()) return true;
-    if (jj_scan_token(ASSIGN)) return true;
+    if (jj_3R_19()) return true;
     return false;
   }
 
   static private boolean jj_3R_17() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_19()) {
-    jj_scanpos = xsp;
     if (jj_3R_20()) {
     jj_scanpos = xsp;
-    if (jj_scan_token(43)) {
+    if (jj_3R_21()) {
     jj_scanpos = xsp;
-    if (jj_scan_token(29)) return true;
+    if (jj_3R_22()) {
+    jj_scanpos = xsp;
+    if (jj_3R_23()) return true;
     }
     }
     }
     return false;
   }
 
-  static private boolean jj_3R_19() {
+  static private boolean jj_3_1() {
     if (jj_3R_15()) return true;
     return false;
   }
@@ -1186,13 +1217,35 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
   }
 
   static private boolean jj_3R_16() {
-    if (jj_3R_15()) return true;
+    if (jj_3R_19()) return true;
     if (jj_scan_token(LBR)) return true;
     return false;
   }
 
   static private boolean jj_3R_15() {
+    if (jj_3R_19()) return true;
+    if (jj_scan_token(ASSIGN)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_19() {
     if (jj_scan_token(ID)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_23() {
+    if (jj_scan_token(BOOL)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_22() {
+    if (jj_scan_token(NUM)) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_21() {
+    if (jj_scan_token(MINUS_SIGN)) return true;
+    if (jj_3R_19()) return true;
     return false;
   }
 

@@ -19,14 +19,15 @@ public interface SLPParserTreeConstants
   public int JJTMAIN_STATEMENT = 15;
   public int JJTSTATEMENT_BLOCK = 16;
   public int JJTSTATEMENT = 17;
-  public int JJTFUNC_CALL = 18;
-  public int JJTEXPR = 19;
-  public int JJTARG_LIST = 20;
-  public int JJTNEMP_ARG_LIST = 21;
-  public int JJTBIN_OP = 22;
-  public int JJTFRAGMENT = 23;
-  public int JJTID = 24;
-  public int JJTRETURN_STATEMENT = 25;
+  public int JJTASSIGN = 18;
+  public int JJTFUNC_CALL = 19;
+  public int JJTEXPR = 20;
+  public int JJTARG_LIST = 21;
+  public int JJTNEMP_ARG_LIST = 22;
+  public int JJTBIN_OP = 23;
+  public int JJTFRAGMENT = 24;
+  public int JJTID = 25;
+  public int JJTRETURN_STATEMENT = 26;
 
 
   public String[] jjtNodeName = {
@@ -48,6 +49,7 @@ public interface SLPParserTreeConstants
     "main_statement",
     "statement_block",
     "statement",
+    "assign",
     "func_call",
     "expr",
     "arg_list",
@@ -58,4 +60,4 @@ public interface SLPParserTreeConstants
     "return_statement",
   };
 }
-/* JavaCC - OriginalChecksum=9797a361974fbc59119a83091c3a819f (do not edit this line) */
+/* JavaCC - OriginalChecksum=73aedd2db88cefb3597f396dc50cc555 (do not edit this line) */

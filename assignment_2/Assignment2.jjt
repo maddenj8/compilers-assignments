@@ -242,13 +242,18 @@ void statement_block() #void : {}
 
 void statement() : {}
 {
-    LOOKAHEAD(2) (id() <ASSIGN> expr() <SEMIC>)
+    LOOKAHEAD(2) assign()
     | LOOKAHEAD(2) func_call()
     | <BEGIN> (statement_block())* return_statement() <END>
     | <IF> condition() <BEGIN> (statement_block())* <END>
     | <ELSE> <BEGIN> (statement_block()) * <END>
     | <WHILE> condition() <BEGIN> (statement_block())* <END>
     | <SKIP_WORD> <SEMIC>
+}
+
+void assign() : {String name;}
+{
+    (name = id() <ASSIGN> expr() <SEMIC>)
 }
 
 void func_call() : {String name;}
@@ -283,12 +288,12 @@ void bin_op() : {}
     | <MINUS_SIGN>
 }
 
-void fragment() : {}
+String fragment() : { String name; Token t; }
 {
-    id()
-    | <MINUS_SIGN> id()
-    | <NUM>
-    | <BOOL>
+    name = id()
+    | t = <MINUS_SIGN> name = id() {jjtThis.value = t.image; return t.image;}
+    | t = <NUM> {jjtThis.value = t.image; return t.image;}
+    | t = <BOOL> {jjtThis.value = t.image; return t.image;}
 }
 
 /** SIMPLE TOKENS **/

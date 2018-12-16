@@ -8,6 +8,8 @@ variable i:integer;
 
 main
 begin
-    x(something, here, i);
-    test_func(here, and, there);
+    b(something, here, i); // not a function
+    test_func(here, and, there); // function not defined
+    x:=3 + 3;
+    i := true;
 end

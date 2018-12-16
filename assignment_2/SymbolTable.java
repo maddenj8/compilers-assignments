@@ -74,7 +74,6 @@ public class SymbolTable {
     }
 
     public void print() {
-        System.out.println(">>>>>>>>");
         for (Object o : scope.entrySet()) {
             Map.Entry entry = (Map.Entry) o;
             System.out.println(entry.getValue());
