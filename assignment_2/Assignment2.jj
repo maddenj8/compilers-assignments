@@ -849,9 +849,6 @@ void nemp_arg_list()       : {String name;}
                             }
                           }
 /*@egen*/                  ])
-    {
-        ST.insertArgs(name); 
-    }
 }
 
 void bin_op() : {/*@bgen(jjtree) bin_op */

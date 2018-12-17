@@ -280,9 +280,6 @@ void arg_list() : {}
 void nemp_arg_list() #void : {String name;}
 {
     (name = id() [<COMMA> nemp_arg_list() #nemp_arg_list(2)])
-    {
-        ST.insertArgs(name); 
-    }
 }
 
 void bin_op() : {}

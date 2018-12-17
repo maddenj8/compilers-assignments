@@ -1006,7 +1006,6 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
       jj_la1[23] = jj_gen;
       ;
     }
-        ST.insertArgs(name);
   }
 
   static final public void bin_op() throws ParseException {
@@ -1176,10 +1175,37 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
     finally { jj_save(2, xla); }
   }
 
+  static private boolean jj_3R_20() {
+    if (jj_3R_19()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_17() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_20()) {
+    jj_scanpos = xsp;
+    if (jj_3R_21()) {
+    jj_scanpos = xsp;
+    if (jj_3R_22()) {
+    jj_scanpos = xsp;
+    if (jj_3R_23()) return true;
+    }
+    }
+    }
+    return false;
+  }
+
   static private boolean jj_3_3() {
     if (jj_3R_17()) return true;
     if (jj_3R_18()) return true;
     if (jj_3R_17()) return true;
+    return false;
+  }
+
+  static private boolean jj_3R_16() {
+    if (jj_3R_19()) return true;
+    if (jj_scan_token(LBR)) return true;
     return false;
   }
 
@@ -1190,12 +1216,6 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
     jj_scanpos = xsp;
     if (jj_scan_token(19)) return true;
     }
-    return false;
-  }
-
-  static private boolean jj_3R_16() {
-    if (jj_3R_19()) return true;
-    if (jj_scan_token(LBR)) return true;
     return false;
   }
 
@@ -1220,35 +1240,14 @@ public class SLPParser/*@bgen(jjtree)*/implements SLPParserTreeConstants, SLPPar
     return false;
   }
 
-  static private boolean jj_3R_21() {
-    if (jj_scan_token(MINUS_SIGN)) return true;
-    if (jj_3R_19()) return true;
-    return false;
-  }
-
   static private boolean jj_3_2() {
     if (jj_3R_16()) return true;
     return false;
   }
 
-  static private boolean jj_3R_20() {
+  static private boolean jj_3R_21() {
+    if (jj_scan_token(MINUS_SIGN)) return true;
     if (jj_3R_19()) return true;
-    return false;
-  }
-
-  static private boolean jj_3R_17() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_20()) {
-    jj_scanpos = xsp;
-    if (jj_3R_21()) {
-    jj_scanpos = xsp;
-    if (jj_3R_22()) {
-    jj_scanpos = xsp;
-    if (jj_3R_23()) return true;
-    }
-    }
-    }
     return false;
   }
 
