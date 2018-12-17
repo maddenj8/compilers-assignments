@@ -29,7 +29,7 @@ public class SymbolTable {
 
     public void insert(String varName, String type) {
         System.out.println("varName " + varName + " type " + type);
-        if (check(varName)) {
+        if (!(scope.get(varName)==null)) {
             if (gscope)
                 globalScope.get(varName).add(type);
             else {

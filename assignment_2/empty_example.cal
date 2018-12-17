@@ -6,6 +6,12 @@ constant a:integer;
 constant b:boolean;
 variable i:integer;
 
+integer test(x:integer, y:integer) is
+    variable tmp:integer;
+    begin
+        return(tmp);    
+    end
+
 main
 begin
     b(something, here, i); // not a function

@@ -324,14 +324,22 @@ void func_list()       : {}
 }
 
 void func() : {/*@bgen(jjtree) func */
-  ASTfunc jjtn000 = new ASTfunc(JJTFUNC);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-/*@egen*/}
+               ASTfunc jjtn000 = new ASTfunc(JJTFUNC);
+               boolean jjtc000 = true;
+               jjtree.openNodeScope(jjtn000);
+/*@egen*/String name;}
 {/*@bgen(jjtree) func */
         try {
 /*@egen*/
-        <TYPE> <ID> <LBR> (param_list())* <RBR> <IS> (decl_list())* (statement_block())*/*@bgen(jjtree)*/
+        <TYPE> name = id() <LBR> (param_list())* <RBR> <IS> (decl_list())* (statement_block())*/*@bgen(jjtree)*/
+        {
+          jjtree.closeNodeScope(jjtn000, true);
+          jjtc000 = false;
+        }
+/*@egen*/
+        {
+            ST.insertFunction(name);
+        }/*@bgen(jjtree)*/
         } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);

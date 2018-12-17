@@ -9,8 +9,10 @@ public class TypeCheckVisitor implements SLPParserVisitor {
         return DataType.Program;
     }
     public Object visit(ASTcode node, Object data) {
-        node.jjtGetChild(0).jjtAccept(this, data);
-        return node.jjtGetChild(1).jjtAccept(this, data);
+        for (int i = 0; i < node.jjtGetNumChildren(); i++) {
+            System.out.println(node.jjtGetChild(i).jjtAccept(this, data));
+        }
+        return data;
     }
     public Object visit(ASTdecl_list node, Object data) {
         node.jjtGetChild(0).jjtAccept(this, data);
@@ -37,7 +39,16 @@ public class TypeCheckVisitor implements SLPParserVisitor {
         node.jjtGetChild(0).jjtAccept(this, data);
         return DataType.Declaration;    
     }
-    public Object visit(ASTfunc node, Object data) {return null;}
+    public Object visit(ASTfunc node, Object data) {
+        SymbolTable ST = (SymbolTable) data;
+        String funcName = node.jjtGetChild(0).jjtAccept(this, data).toString();
+        if (!(ST.check(funcName)))
+            System.out.println("Type Error: " + funcName + " was used before it was defined");
+        for (int i = 0; i < node.jjtGetNumChildren(); i++) {
+            node.jjtGetChild(i).jjtAccept(this, data);
+        }
+        return data;
+    }
     public Object visit(ASTparam_list node, Object data) {
         return node.jjtGetChild(0).jjtAccept(this, data);
     }
@@ -139,15 +150,8 @@ public class TypeCheckVisitor implements SLPParserVisitor {
         return true;
     }
     public Object visit(ASTbin_op node, Object data) {
-        String leftSideVal = node.jjtGetChild(0).jjtAccept(this, data).toString();
-        String leftSideType = node.jjtGetChild(0).toString();
-        System.out.println(leftSideType + " " + leftSideVal);
-        return null;
+        return node.jjtGetChild(0).jjtAccept(this, data);
     }
-
-    // public Object visit(ASTlog_op node, Object data) {
-        // return null;
-    // }
     public Object visit(ASTreturn_statement node, Object data) {
         return null;
     }

@@ -173,9 +173,12 @@ void func_list() #void : {}
     {ST.endScope();}
 }
 
-void func() : {}
+void func() : {String name;}
 {
-        <TYPE> <ID> <LBR> (param_list())* <RBR> <IS> (decl_list())* (statement_block())*
+        <TYPE> name = id() <LBR> (param_list())* <RBR> <IS> (decl_list())* (statement_block())*
+        {
+            ST.insertFunction(name);
+        }
 }
 
 void param_list() : {}
